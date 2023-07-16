@@ -267,7 +267,7 @@ void pkg2_replace_kip(link_t *info, u64 tid, pkg2_kip1_t *kip1)
 		{
 			ki->kip1 = kip1;
 			ki->size = _pkg2_calc_kip1_size(kip1);
-DPRINTF("replaced kip %s (new size %08X)\n", kip1->name, ki->size);
+DPRINTF("reemplazado kip %s (nuevo tam. %08X)\n", kip1->name, ki->size);
 			return;
 		}
 	}
@@ -278,7 +278,7 @@ void pkg2_add_kip(link_t *info, pkg2_kip1_t *kip1)
 	pkg2_kip1_info_t *ki = (pkg2_kip1_info_t *)malloc(sizeof(pkg2_kip1_info_t));
 	ki->kip1 = kip1;
 	ki->size = _pkg2_calc_kip1_size(kip1);
-DPRINTF("added kip %s (size %08X)\n", kip1->name, ki->size);
+DPRINTF("unido kip %s (tam. %08X)\n", kip1->name, ki->size);
 	list_append(info, &ki->link);
 }
 
@@ -331,18 +331,18 @@ int pkg2_decompress_kip(pkg2_kip1_info_t* ki, u32 sectsToDecomp)
 
 		unsigned int compSize = hdr.sections[sectIdx].size_comp;
 		unsigned int outputSize = hdr.sections[sectIdx].size_decomp;
-		gfx_printf("Decomping '%s', sect %d, size %d..\n", (const char*)hdr.name, sectIdx, compSize);
+		gfx_printf("Expandiendo '%s', sect %d, tam. %d..\n", (const char*)hdr.name, sectIdx, compSize);
 		if (blz_uncompress_srcdest(srcDataPtr, compSize, dstDataPtr, outputSize) == 0)
 		{
 			gfx_con.mute = false;
-			gfx_printf("%kERROR decomping sect %d of '%s'!%k\n", TXT_CLR_ERROR, sectIdx, (char*)hdr.name, TXT_CLR_DEFAULT);
+			gfx_printf("%kERROR expandiendo sect %d of '%s'!%k\n", TXT_CLR_ERROR, sectIdx, (char*)hdr.name, TXT_CLR_DEFAULT);
 			free(newKip);
 
 			return 1;
 		}
 		else
 		{
-			DPRINTF("Done! Decompressed size is %d!\n", outputSize);
+			DPRINTF("Hecho! Tam. descomprimido: %d!\n", outputSize);
 		}
 		hdr.sections[sectIdx].size_comp = outputSize;
 		srcDataPtr += compSize;
@@ -474,7 +474,7 @@ const char* pkg2_patch_kips(link_t *info, char* patchNames)
 		}
 		patches[i][valueLen] = 0;
 
-		DPRINTF("Requested patch: '%s'\n", patches[i]);
+		DPRINTF("Parche requerido: '%s'\n", patches[i]);
 	}
 
 	// Parse external patches if needed.
@@ -572,7 +572,7 @@ const char* pkg2_patch_kips(link_t *info, char* patchNames)
 
 					if (currPatchset->patches == NULL)
 					{
-						DPRINTF("Patch '%s' not necessary for %s\n", currPatchset->name, (const char*)ki->kip1->name);
+						DPRINTF("Parche '%s' no necesario para %s\n", currPatchset->name, (const char*)ki->kip1->name);
 						patchesApplied |= appliedMask;
 
 						continue; // Continue in case it's double defined.
@@ -583,7 +583,7 @@ const char* pkg2_patch_kips(link_t *info, char* patchNames)
 					{
 						if (bitsAffected & BIT(currSectIdx))
 						{
-							gfx_printf("Applying '%s' on %s, sect %d\n", currPatchset->name, (const char*)ki->kip1->name, currSectIdx);
+							gfx_printf("Aplicando '%s' en %s, sect %d\n", currPatchset->name, (const char*)ki->kip1->name, currSectIdx);
 							for (const kip1_patch_t* currPatch = currPatchset->patches; currPatch != NULL && currPatch->srcData != NULL; currPatch++)
 							{
 								if (GET_KIP_PATCH_SECTION(currPatch->offset) != currSectIdx)
@@ -592,7 +592,7 @@ const char* pkg2_patch_kips(link_t *info, char* patchNames)
 								if (!currPatch->length)
 								{
 									gfx_con.mute = false;
-									gfx_printf("%kPatch empty!%k\n", TXT_CLR_ERROR, TXT_CLR_DEFAULT);
+									gfx_printf("%kParche vacio!%k\n", TXT_CLR_ERROR, TXT_CLR_DEFAULT);
 									return currPatchset->name; // MUST stop here as it's not probably intended.
 								}
 
@@ -602,12 +602,12 @@ const char* pkg2_patch_kips(link_t *info, char* patchNames)
 									(memcmp(&kipSectData[currOffset], currPatch->dstData, currPatch->length) != 0))
 								{
 									gfx_con.mute = false;
-									gfx_printf("%kPatch mismatch at 0x%x!%k\n", TXT_CLR_ERROR, currOffset, TXT_CLR_DEFAULT);
+									gfx_printf("%kDesajuste de parche en 0x%x!%k\n", TXT_CLR_ERROR, currOffset, TXT_CLR_DEFAULT);
 									return currPatchset->name; // MUST stop here as kip is likely corrupt.
 								}
 								else
 								{
-									DPRINTF("Patching %d bytes at offset 0x%x\n", currPatch->length, currOffset);
+									DPRINTF("Parcheando %d bytes en offset 0x%x\n", currPatch->length, currOffset);
 									memcpy(&kipSectData[currOffset], currPatch->dstData, currPatch->length);
 								}
 							}
@@ -630,7 +630,7 @@ const char* pkg2_patch_kips(link_t *info, char* patchNames)
 				if (currKipIdx > 17)
 					emu_cfg.fs_ver -= 2;
 
-				gfx_printf("Injecting emuMMC. FS ID: %d\n", emu_cfg.fs_ver);
+				gfx_printf("Inyectando EmuNAND. FS ID: %d\n", emu_cfg.fs_ver);
 				if (_kipm_inject("/bootloader/sys/emummc.kipm", "FS", ki))
 					return "emummc";
 			}
@@ -690,7 +690,7 @@ pkg2_hdr_t *pkg2_decrypt(void *data, u8 kb, bool is_exo)
 	// Decrypt sections.
 	for (u32 i = 0; i < 4; i++)
 	{
-DPRINTF("sec %d has size %08X\n", i, hdr->sec_size[i]);
+DPRINTF("tam. sec %d: %08X\n", i, hdr->sec_size[i]);
 		if (!hdr->sec_size[i])
 			continue;
 
@@ -715,7 +715,7 @@ static u32 _pkg2_ini1_build(u8 *pdst, pkg2_hdr_t *hdr, link_t *kips_info, bool n
 	// Merge kips into INI1.
 	LIST_FOREACH_ENTRY(pkg2_kip1_info_t, ki, kips_info, link)
 	{
-DPRINTF("adding kip1 '%s' @ %08X (%08X)\n", ki->kip1->name, (u32)ki->kip1, ki->size);
+DPRINTF("Agregando kip1 '%s' @ %08X (%08X)\n", ki->kip1->name, (u32)ki->kip1, ki->size);
 		memcpy(pdst, ki->kip1, ki->size);
 		pdst += ki->size;
 		ini1_size += ki->size;
@@ -799,13 +799,13 @@ DPRINTF("%s @ %08X (%08X)\n", is_meso ? "Mesosphere": "kernel",(u32)ctxt->kernel
 	hdr->sec_size[PKG2_SEC_KERNEL] = kernel_size;
 	se_aes_crypt_ctr(pkg2_keyslot, pdst, kernel_size, pdst, kernel_size, &hdr->sec_ctr[PKG2_SEC_KERNEL * SE_AES_IV_SIZE]);
 	pdst += kernel_size;
-DPRINTF("kernel encrypted\n");
+DPRINTF("kernel encriptado\n");
 
 	// Build INI1 for old Package2.
 	u32 ini1_size = 0;
 	if (!ctxt->new_pkg2)
 		ini1_size = _pkg2_ini1_build(pdst, hdr, kips_info, false);
-DPRINTF("INI1 encrypted\n");
+DPRINTF("INI1 encriptado\n");
 
 	if (!is_exo) // Not needed on Exosphere 1.0.0 and up.
 	{

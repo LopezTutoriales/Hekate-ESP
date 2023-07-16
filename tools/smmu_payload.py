@@ -33,6 +33,6 @@ loop:
 try:
 	ks = Ks(KS_ARCH_ARM64, KS_MODE_LITTLE_ENDIAN)
 	encoding, count = ks.asm(CODE, 0x0)
-	print("%s = %s (number of statements: %u)" %(CODE, ', '.join([('0x%02x' % (x)) for x in encoding]), count))
+	print("%s = %s (numero de estamentos: %u)" %(CODE, ', '.join([('0x%02x' % (x)) for x in encoding]), count))
 except KsError as e:
 	print("ERROR: %s" %e)

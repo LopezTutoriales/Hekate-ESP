@@ -159,8 +159,8 @@ int parse_fss(launch_ctxt_t *ctxt, const char *path)
 	if (fss_meta->magic == FSS0_MAGIC)
 	{
 		gfx_printf("Atmosphere %d.%d.%d-%08x via FSS0/PKG3\n"
-			"Max HOS: %d.%d.%d\n"
-			"Unpacking..  ",
+			"HOS Max: %d.%d.%d\n"
+			"Desempaquetando..  ",
 			fss_meta->version >> 24, (fss_meta->version >> 16) & 0xFF, (fss_meta->version >> 8) & 0xFF, fss_meta->git_rev,
 			fss_meta->hos_ver >> 24, (fss_meta->hos_ver >> 16) & 0xFF, (fss_meta->hos_ver >> 8) & 0xFF);
 
@@ -191,7 +191,7 @@ int parse_fss(launch_ctxt_t *ctxt, const char *path)
 				merge_kip_t *mkip1 = (merge_kip_t *)malloc(sizeof(merge_kip_t));
 				mkip1->kip1 = content;
 				list_append(&ctxt->kip1_list, &mkip1->link);
-				DPRINTF("Loaded %s.kip1 from FSS0 (size %08X)\n", curr_fss_cnt[i].name, curr_fss_cnt[i].size);
+				DPRINTF("Cargado %s.kip1 desde FSS0 (tam. %08X)\n", curr_fss_cnt[i].name, curr_fss_cnt[i].size);
 				break;
 
 			case CNT_TYPE_KRN:

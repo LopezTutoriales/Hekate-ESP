@@ -58,9 +58,9 @@ static void _create_window_emummc()
 
 	lv_obj_t *win;
 	if (!mbr_ctx.part_idx)
-		win = nyx_create_window_custom_close_btn(SYMBOL_DRIVE"  Create SD File emuMMC", _action_emummc_window_close);
+		win = nyx_create_window_custom_close_btn(SYMBOL_DRIVE"  Crear Archivo SD EmuNAND", _action_emummc_window_close);
 	else
-		win = nyx_create_window_custom_close_btn(SYMBOL_DRIVE"  Create SD Partition emuMMC", _action_emummc_window_close);
+		win = nyx_create_window_custom_close_btn(SYMBOL_DRIVE"  Crear Particion SD EmuNAND", _action_emummc_window_close);
 
 	//Disable buttons.
 	nyx_window_toggle_buttons(win, true);
@@ -202,8 +202,8 @@ static void _create_mbox_emummc_raw()
 	lv_obj_set_style(dark_bg, &mbox_darken);
 	lv_obj_set_size(dark_bg, LV_HOR_RES, LV_VER_RES);
 
-	static const char *mbox_btn_format[] = { "\222Continue", "\222Cancel", "" };
-	static char *mbox_btn_parts[] = { "\262Part 1", "\262Part 2", "\262Part 3", "\222Cancel", "" };
+	static const char *mbox_btn_format[] = { "\222Continuar", "\222Cancelar", "" };
+	static char *mbox_btn_parts[] = { "\262Part 1", "\262Part 2", "\262Part 3", "\222Cancelar", "" };
 	lv_obj_t * mbox = lv_mbox_create(dark_bg, NULL);
 	lv_mbox_set_recolor_text(mbox, true);
 	lv_obj_set_width(mbox, LV_HOR_RES / 9 * 6);
@@ -254,18 +254,18 @@ static void _create_mbox_emummc_raw()
 	if (mbr_ctx.available)
 	{
 		s_printf(txt_buf,
-			"#C7EA46 Found applicable partition(s)!#\n"
-			"#FF8000 Choose a partition to continue:#\n\n");
+			"#C7EA46 Particion(es) encontradas!#\n"
+			"#FF8000 Elije particion para continuar:#\n\n");
 	}
 	else
-		s_printf(txt_buf, "#FFDD00 Failed to find applicable partition!#\n\n");
+		s_printf(txt_buf, "#FFDD00 Error al encontrar particion!#\n\n");
 
 	s_printf(txt_buf + strlen(txt_buf),
-		"Partition table:\n"
-		"#C0C0C0 Part 0: Type: %02x, Start: %08x, Size: %08x#\n"
-		"#%s Part 1: Type: %02x, Start: %08x, Size: %08x#\n"
-		"#%s Part 2: Type: %02x, Start: %08x, Size: %08x#\n"
-		"#%s Part 3: Type: %02x, Start: %08x, Size: %08x#",
+		"Tabla de particiones:\n"
+		"#C0C0C0 Part 0: Tipo: %02x, Inicio: %08x, Tam: %08x#\n"
+		"#%s Part 1: Tipo: %02x, Inicio: %08x, Tam: %08x#\n"
+		"#%s Part 2: Tipo: %02x, Inicio: %08x, Tam: %08x#\n"
+		"#%s Part 3: Tipo: %02x, Inicio: %08x, Tam: %08x#",
 		mbr->partitions[0].type, mbr->partitions[0].start_sct, mbr->partitions[0].size_sct,
 		(mbr_ctx.available & BIT(0)) ? (mbr_ctx.resized_cnt[0] ? "FFDD00" : "C7EA46") : "C0C0C0",
 		 mbr->partitions[1].type, mbr->partitions[1].start_sct, mbr->partitions[1].size_sct,
@@ -275,11 +275,11 @@ static void _create_mbox_emummc_raw()
 		 mbr->partitions[3].type, mbr->partitions[3].start_sct, mbr->partitions[3].size_sct);
 
 	if (mbr_ctx.resized_cnt[0] || mbr_ctx.resized_cnt[1] || mbr_ctx.resized_cnt[2])
-		strcat(txt_buf, "\n\n#FFDD00 Note:# Yellow entries have USER partition resized.");
+		strcat(txt_buf, "\n\n#FFDD00 Nota:# Las amarillas tienen part. USER redimensio.");
 
 	if (!mbr_ctx.available)
-		strcat(txt_buf, "\n#FF8000 Do you want to partition the SD card?#\n"
-						  "#FF8000 (You will be asked on how to proceed)#");
+		strcat(txt_buf, "\n#FF8000 Quieres particionar la tarjeta SD?#\n"
+						  "#FF8000 (Se le preguntara como proceder)#");
 
 	lv_mbox_set_text(mbox, txt_buf);
 	free(txt_buf);
@@ -343,16 +343,16 @@ static lv_res_t _create_mbox_emummc_create(lv_obj_t *btn)
 	lv_obj_set_style(dark_bg, &mbox_darken);
 	lv_obj_set_size(dark_bg, LV_HOR_RES, LV_VER_RES);
 
-	static const char * mbox_btn_map[] = { "\222SD File", "\222SD Partition", "\222Cancel", "" };
+	static const char * mbox_btn_map[] = { "\222Archivo SD", "\222Particion SD", "\222Cancelar", "" };
 	lv_obj_t * mbox = lv_mbox_create(dark_bg, NULL);
 	lv_mbox_set_recolor_text(mbox, true);
 	lv_obj_set_width(mbox, LV_HOR_RES / 9 * 6);
 
 	lv_mbox_set_text(mbox,
-		"Welcome to #C7EA46 emuMMC# creation tool!\n\n"
-		"Please choose what type of emuMMC you want to create.\n"
-		"#FF8000 SD File# is saved as files in the FAT partition.\n"
-		"#FF8000 SD Partition# is saved as raw image in an available partition.");
+		"Bienvenido a la herramienta para crear una #C7EA46 EmuNAND#!\n\n"
+		"Elije el tipo de EmuNAND que quieres crear.\n"
+		"#FF8000 Archivo SD# se guarda como archivos en la SD.\n"
+		"#FF8000 Particion SD# se guarda como imagen raw en una particion disponible.");
 
 	lv_mbox_add_btns(mbox, mbox_btn_map, _create_emummc_action);
 
@@ -394,8 +394,8 @@ static void _create_emummc_migrated_mbox()
 	lv_obj_set_width(mbox, LV_HOR_RES / 9 * 4);
 
 	lv_mbox_set_text(mbox,
-		"#FF8000 emuMMC Configuration#\n\n"
-		"#96FF00 The emuMMC configuration#\n#96FF00 was saved to sd card!#");
+		"#FF8000 Configuracion de EmuNAND#\n\n"
+		"#96FF00 Configuracion de EmuNAND#\n#96FF00 guardada en la SD!#");
 
 	lv_mbox_add_btns(mbox, mbox_btn_map, _save_emummc_cfg_mig_mbox_action);
 
@@ -678,8 +678,8 @@ static lv_res_t _create_emummc_migrate_action(lv_obj_t * btns, const char * txt)
 	lv_obj_set_style(dark_bg, &mbox_darken);
 	lv_obj_set_size(dark_bg, LV_HOR_RES, LV_VER_RES);
 
-	static const char *mbox_btn_map[] = { "\222Continue", "\222Cancel", "" };
-	static const char *mbox_btn_map1[] = { "\222SD File", "\222SD Partition", "\222Cancel", "" };
+	static const char *mbox_btn_map[] = { "\222Continuar", "\222Cancelar", "" };
+	static const char *mbox_btn_map1[] = { "\222Archivo SD", "\222Particion SD", "\222Cancelar", "" };
 	static const char *mbox_btn_map3[] = { "\251", "OK", "\251", "" };
 	lv_obj_t * mbox = lv_mbox_create(dark_bg, NULL);
 	lv_mbox_set_recolor_text(mbox, true);
@@ -690,41 +690,41 @@ static lv_res_t _create_emummc_migrate_action(lv_obj_t * btns, const char * txt)
 	if (backup)
 	{
 		s_printf(txt_buf,
-			"#C7EA46 Found suitable backup for emuMMC!#\n\n"
-			"#FF8000 Do you want to migrate it?#\n");
+			"#C7EA46 Encontrado backup de la EmuNAND!#\n\n"
+			"#FF8000 Quieres migrarlo?#\n");
 		lv_mbox_add_btns(mbox, mbox_btn_map, _create_emummc_mig4_action);
 	}
 	else if (emummc)
 	{
 		s_printf(txt_buf,
-			"#C7EA46 Found SD Partition based emuMMC!#\n\n"
-			"#FF8000 Do you want to repair the config and partition type for it?#\n");
+			"#C7EA46 Encontrada EmuNAND en Particion SD!#\n\n"
+			"#FF8000 Quieres repararle la configuracion y tipo de particion?#\n");
 		lv_mbox_add_btns(mbox, mbox_btn_map, _create_emummc_mig3_action);
 	}
 	else if (em_raw && em_file)
 	{
 		s_printf(txt_buf,
-			"#C7EA46 Found both foreign SD File and Partition emunand!#\n\n"
-			"#FF8000 Choose what to migrate:#\n");
+			"#C7EA46 Encontrada EmuNANDs en archivo SD y en Particion!#\n\n"
+			"#FF8000 Elije cual quieres migrar:#\n");
 		lv_mbox_add_btns(mbox, mbox_btn_map1, _create_emummc_mig1_action);
 	}
 	else if (em_raw)
 	{
 		s_printf(txt_buf,
-			"#C7EA46 Found foreign SD Partition emunand!#\n\n"
-			"#FF8000 Do you want to migrate it?#\n");
+			"#C7EA46 Encontrada EmuNAND extranjera en Particion SD!#\n\n"
+			"#FF8000 Quieres migrarla?#\n");
 		lv_mbox_add_btns(mbox, mbox_btn_map, _create_emummc_mig2_action);
 	}
 	else if (em_file)
 	{
 		s_printf(txt_buf,
-			"#C7EA46 Found foreign SD File emunand!#\n\n"
-			"#FF8000 Do you want to migrate it?#\n");
+			"#C7EA46 Encontrada EmuNAND extranjera en Archivo SD!#\n\n"
+			"#FF8000 Quieres migrarla?#\n");
 		lv_mbox_add_btns(mbox, mbox_btn_map, _create_emummc_mig0_action);
 	}
 	else
 	{
-		s_printf(txt_buf, "No emuMMC or foreign emunand found!\n");
+		s_printf(txt_buf, "Ninguna EmuNAND extranjera encontrada!\n");
 		lv_mbox_add_btns(mbox, mbox_btn_map3, mbox_action);
 	}
 
@@ -755,15 +755,15 @@ static lv_res_t _create_mbox_emummc_migrate(lv_obj_t *btn)
 	lv_obj_set_style(dark_bg, &mbox_darken);
 	lv_obj_set_size(dark_bg, LV_HOR_RES, LV_VER_RES);
 
-	static char *mbox_btn_map[] = { "\262Backup", "\262Fix RAW", "\262Emunand", "\222Cancel", "" };
+	static char *mbox_btn_map[] = { "\262Backup", "\262Arreglar RAW", "\262EmuNAND", "\222Cancelar", "" };
 	lv_obj_t * mbox = lv_mbox_create(dark_bg, NULL);
 	lv_mbox_set_recolor_text(mbox, true);
 	lv_obj_set_width(mbox, LV_HOR_RES / 9 * 6);
 
 	lv_mbox_set_text(mbox,
-		"Welcome to #C7EA46 emuMMC# migration tool!\n\n"
-		"Please choose what type of migration you want to do.\n"
-		"Anything that was not found will have the button disabled.");
+		"Bienvenido a la herramienta de migracion de EmuNAND!\n\n"
+		"Elije del tipo de migracion que quieres hacer.\n"
+		"Lo que no se encuentre tendra el boton deshabilitado.");
 
 	char *path_buf = (char *)malloc(0x512);
 	mbr_t *mbr = (mbr_t *)malloc(sizeof(mbr_t));
@@ -895,8 +895,8 @@ static void _create_emummc_saved_mbox()
 	lv_obj_set_width(mbox, LV_HOR_RES / 9 * 4);
 
 	lv_mbox_set_text(mbox,
-		"#FF8000 emuMMC Configuration#\n\n"
-		"#96FF00 The emuMMC configuration#\n#96FF00 was saved to sd card!#");
+		"#FF8000 Configuracion de EmuNAND#\n\n"
+		"#96FF00 Configuracion de EmuNAND#\n#96FF00 guardada en la SD!#");
 
 	lv_mbox_add_btns(mbox, mbox_btn_map, _save_emummc_cfg_mbox_action);
 
@@ -946,8 +946,8 @@ static lv_res_t _save_file_emummc_cfg_action(lv_obj_t *btn)
 
 static lv_res_t _create_change_emummc_window(lv_obj_t *btn_caller)
 {
-	lv_obj_t *win = nyx_create_standard_window(SYMBOL_SETTINGS"  Change emuMMC");
-	lv_win_add_btn(win, NULL, SYMBOL_POWER"  Disable", _save_disable_emummc_cfg_action);
+	lv_obj_t *win = nyx_create_standard_window(SYMBOL_SETTINGS"  Cambiar EmuNAND");
+	lv_win_add_btn(win, NULL, SYMBOL_POWER"  Desactivar", _save_disable_emummc_cfg_action);
 
 	sd_mount();
 
@@ -1053,7 +1053,7 @@ out0:;
 	lv_label_set_static_text(label_sep, "");
 
 	lv_obj_t *label_txt = lv_label_create(h1, NULL);
-	lv_label_set_static_text(label_txt, "SD Raw Partitions");
+	lv_label_set_static_text(label_txt, "Particiones SD Raw");
 	lv_obj_set_style(label_txt, lv_theme_get_current()->label.prim);
 	lv_obj_align(label_txt, label_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, -(LV_DPI / 2));
 
@@ -1110,7 +1110,7 @@ out0:;
 		lv_label_set_recolor(lv_desc, true);
 		lv_obj_set_style(lv_desc, &hint_small_style);
 
-		s_printf(txt_buf, "Sector start: 0x%08X\nFolder: %s", emummc_img->part_sector[raw_btn_idx], &emummc_img->part_path[raw_btn_idx * 128]);
+		s_printf(txt_buf, "Inicio Sector: 0x%08X\nCarpeta: %s", emummc_img->part_sector[raw_btn_idx], &emummc_img->part_path[raw_btn_idx * 128]);
 		lv_label_set_text(lv_desc, txt_buf);
 		lv_obj_align(lv_desc, btn, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 5);
 	}
@@ -1129,7 +1129,7 @@ out0:;
 	lv_label_set_static_text(label_sep, "");
 
 	lv_obj_t *label_txt3 = lv_label_create(h2, NULL);
-	lv_label_set_static_text(label_txt3, "SD File Based");
+	lv_label_set_static_text(label_txt3, "Archivo SD");
 	lv_obj_set_style(label_txt3, lv_theme_get_current()->label.prim);
 	lv_obj_align(label_txt3, label_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, -LV_DPI / 7);
 
@@ -1167,7 +1167,7 @@ out1:
 
 lv_res_t create_win_emummc_tools(lv_obj_t *btn)
 {
-	lv_obj_t *win = nyx_create_standard_window(SYMBOL_EDIT"  emuMMC Manage");
+	lv_obj_t *win = nyx_create_standard_window(SYMBOL_EDIT"  Administrar EmuNAND");
 
 	// Set resources to be managed by other windows.
 	emummc_manage_window = win;
@@ -1198,7 +1198,7 @@ lv_res_t create_win_emummc_tools(lv_obj_t *btn)
 	lv_label_set_static_text(label_sep, "");
 
 	lv_obj_t *label_txt = lv_label_create(h1, NULL);
-	lv_label_set_static_text(label_txt, "emuMMC Info & Selection");
+	lv_label_set_static_text(label_txt, "Info EmuNAND y Seleccion");
 	lv_obj_set_style(label_txt, lv_theme_get_current()->label.prim);
 	lv_obj_align(label_txt, label_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, -LV_DPI / 9);
 
@@ -1211,7 +1211,7 @@ lv_res_t create_win_emummc_tools(lv_obj_t *btn)
 	// Create emuMMC info labels.
 	lv_obj_t *label_btn = lv_label_create(h1, NULL);
 	lv_label_set_recolor(label_btn, true);
-	lv_label_set_static_text(label_btn, emu_info.enabled ? "#96FF00 "SYMBOL_OK"  Enabled!#" : "#FF8000 "SYMBOL_CLOSE"  Disabled!#");
+	lv_label_set_static_text(label_btn, emu_info.enabled ? "#96FF00 "SYMBOL_OK"  Activada!#" : "#FF8000 "SYMBOL_CLOSE"  Desactivada!#");
 	lv_obj_align(label_btn, line_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, LV_DPI / 4);
 
 	lv_obj_t *label_txt2 = lv_label_create(h1, NULL);
@@ -1221,17 +1221,17 @@ lv_res_t create_win_emummc_tools(lv_obj_t *btn)
 	if (emu_info.enabled)
 	{
 		if (emu_info.sector)
-			s_printf(txt_buf, "#00DDFF Type:# SD Raw Partition\n#00DDFF Sector:# 0x%08X\n#00DDFF Nintendo folder:# %s",
+			s_printf(txt_buf, "#00DDFF Tipo:# Particion SD Raw\n#00DDFF Sector:# 0x%08X\n#00DDFF Carpeta Nintendo:# %s",
 				emu_info.sector, emu_info.nintendo_path ? emu_info.nintendo_path : "");
 		else
-			s_printf(txt_buf, "#00DDFF Type:# SD File\n#00DDFF Base folder:# %s\n#00DDFF Nintendo folder:# %s",
+			s_printf(txt_buf, "#00DDFF Tipo:# Archivo SD\n#00DDFF Basado en Carpeta:# %s\n#00DDFF Carpeta Nintendo:# %s",
 				emu_info.path ? emu_info.path : "", emu_info.nintendo_path ? emu_info.nintendo_path : "");
 
 		lv_label_set_text(label_txt2, txt_buf);
 	}
 	else
 	{
-		lv_label_set_static_text(label_txt2, "emuMMC is disabled and eMMC will be used for boot.\n\n");
+		lv_label_set_static_text(label_txt2, "EmuNAND desactivada. Se usara eMMC para arrancar.\n\n");
 	}
 
 	if (emu_info.path)
@@ -1247,16 +1247,16 @@ lv_res_t create_win_emummc_tools(lv_obj_t *btn)
 	lv_obj_t *btn2 = lv_btn_create(h1, NULL);
 	lv_btn_set_fit(btn2, true, true);
 	label_btn = lv_label_create(btn2, NULL);
-	lv_label_set_static_text(label_btn, SYMBOL_SETTINGS"  Change emuMMC");
+	lv_label_set_static_text(label_btn, SYMBOL_SETTINGS"  Cambiar EmuNAND");
 	lv_obj_align(btn2, label_txt2, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI * 6 / 10);
 	lv_btn_set_action(btn2, LV_BTN_ACTION_CLICK, _create_change_emummc_window);
 
 	label_txt2 = lv_label_create(h1, NULL);
 	lv_label_set_recolor(label_txt2, true);
 	lv_label_set_static_text(label_txt2,
-		"Choose between images created in the emuMMC folder\n"
-		"or in SD card partitions. You can have at most 3 partition\n"
-		"based and countless file based.");
+		"Elije entre imagenes creadas en la carpeta emuMMC o en\n"
+		"particiones en la SD. Puedes tener maximo 3 basadas en\n"
+		"particiones e infinitas basadas en archivo.");
 
 	lv_obj_set_style(label_txt2, &hint_small_style);
 	lv_obj_align(label_txt2, btn2, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 3);
@@ -1274,7 +1274,7 @@ lv_res_t create_win_emummc_tools(lv_obj_t *btn)
 	lv_label_set_static_text(label_sep, "");
 
 	lv_obj_t *label_txt3 = lv_label_create(h2, NULL);
-	lv_label_set_static_text(label_txt3, "emuMMC Tools");
+	lv_label_set_static_text(label_txt3, "Herramientas de EmuNAND");
 	lv_obj_set_style(label_txt3, lv_theme_get_current()->label.prim);
 	lv_obj_align(label_txt3, label_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, 0);
 
@@ -1285,15 +1285,15 @@ lv_res_t create_win_emummc_tools(lv_obj_t *btn)
 	lv_obj_t *btn3 = lv_btn_create(h2, btn2);
 	label_btn = lv_label_create(btn3, NULL);
 	lv_btn_set_fit(btn3, true, true);
-	lv_label_set_static_text(label_btn, SYMBOL_DRIVE"  Create emuMMC");
+	lv_label_set_static_text(label_btn, SYMBOL_DRIVE"  Crear EmuNAND");
 	lv_obj_align(btn3, line_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, LV_DPI / 4);
 	lv_btn_set_action(btn3, LV_BTN_ACTION_CLICK, _create_mbox_emummc_create);
 
 	lv_obj_t *label_txt4 = lv_label_create(h2, NULL);
 	lv_label_set_recolor(label_txt4, true);
 	lv_label_set_static_text(label_txt4,
-		"Allows you to create a new #C7EA46 SD File# or #C7EA46 SD Raw Partition#\n"
-		"emuMMC. You can create it from eMMC or a eMMC Backup.");
+		"Permite crear una EmuNAND en #C7EA46 archivo SD# o en #C7EA46 particion\n"
+		"SD Raw. Puedes crearla desde la eMMC o desde un Backup.");
 
 	lv_obj_set_style(label_txt4, &hint_small_style);
 	lv_obj_align(label_txt4, btn3, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 3);
@@ -1301,7 +1301,7 @@ lv_res_t create_win_emummc_tools(lv_obj_t *btn)
 	// Create Migrate emuMMC button.
 	lv_obj_t *btn4 = lv_btn_create(h2, btn2);
 	label_btn = lv_label_create(btn4, NULL);
-	lv_label_set_static_text(label_btn, SYMBOL_SHUFFLE"  Migrate emuMMC");
+	lv_label_set_static_text(label_btn, SYMBOL_SHUFFLE"  Migrar EmuNAND");
 	lv_obj_align(btn4, label_txt4, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 2);
 	lv_btn_set_action(btn4, LV_BTN_ACTION_CLICK, NULL);
 	lv_btn_set_action(btn4, LV_BTN_ACTION_CLICK, _create_mbox_emummc_migrate);
@@ -1309,8 +1309,8 @@ lv_res_t create_win_emummc_tools(lv_obj_t *btn)
 	label_txt4 = lv_label_create(h2, NULL);
 	lv_label_set_recolor(label_txt4, true);
 	lv_label_set_static_text(label_txt4,
-		"Migrate a backup to a #C7EA46 SD File# or repair existing #C7EA46 SD Raw Partition#.\n"
-		"Additionally it allows you to migrate from other emunand\nsolutions.");
+		"Migra un backup a #C7EA46 Archivo SD# o repara una #C7EA46 Particion SD RAW#\n"
+		"existente. Adicionalmente puedes migrar desde otras EmuNANDs.");
 	lv_obj_set_style(label_txt4, &hint_small_style);
 	lv_obj_align(label_txt4, btn4, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 3);
 

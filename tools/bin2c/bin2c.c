@@ -39,14 +39,14 @@ main ( int argc, char* argv[] )
 
   if ( argc != 2 )
   {
-    fprintf ( stderr, "Usage: %s binary_file > output_file\n", argv[0] );
+    fprintf ( stderr, "Uso: %s arch_binario > arch_salida\n", argv[0] );
     return -1;
   }
 
   fd = fopen ( argv[1], "rb" );
   if ( fd == NULL )
   {
-    fprintf ( stderr, "%s: can't open %s for reading\n", argv[0], argv[1] );
+    fprintf ( stderr, "%s: Imposible abrir %s para leer\n", argv[0], argv[1] );
     return -1;
   }
 
@@ -62,7 +62,7 @@ main ( int argc, char* argv[] )
     if ( size - total < blksize ) blksize = size - total;
     if ( fread ( buf, 1, blksize, fd ) != blksize )
     {
-      fprintf ( stderr, "%s: file read error\n", argv[0] );
+      fprintf ( stderr, "%s: Error al leer archivo\n", argv[0] );
       return -1;
     }
     for ( i = 0; i < blksize; i++ )

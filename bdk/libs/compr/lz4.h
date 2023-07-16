@@ -532,16 +532,16 @@ union LZ4_streamDecode_u {
 #endif /* LZ4_DISABLE_DEPRECATE_WARNINGS */
 
 /* Obsolete compression functions */
-LZ4_DEPRECATED("use LZ4_compress_default() instead") LZ4LIB_API int LZ4_compress               (const char* source, char* dest, int sourceSize);
-LZ4_DEPRECATED("use LZ4_compress_default() instead") LZ4LIB_API int LZ4_compress_limitedOutput (const char* source, char* dest, int sourceSize, int maxOutputSize);
-LZ4_DEPRECATED("use LZ4_compress_fast_extState() instead") LZ4LIB_API int LZ4_compress_withState               (void* state, const char* source, char* dest, int inputSize);
-LZ4_DEPRECATED("use LZ4_compress_fast_extState() instead") LZ4LIB_API int LZ4_compress_limitedOutput_withState (void* state, const char* source, char* dest, int inputSize, int maxOutputSize);
-LZ4_DEPRECATED("use LZ4_compress_fast_continue() instead") LZ4LIB_API int LZ4_compress_continue                (LZ4_stream_t* LZ4_streamPtr, const char* source, char* dest, int inputSize);
-LZ4_DEPRECATED("use LZ4_compress_fast_continue() instead") LZ4LIB_API int LZ4_compress_limitedOutput_continue  (LZ4_stream_t* LZ4_streamPtr, const char* source, char* dest, int inputSize, int maxOutputSize);
+LZ4_DEPRECATED("usa LZ4_compress_default() en su lugar") LZ4LIB_API int LZ4_compress               (const char* source, char* dest, int sourceSize);
+LZ4_DEPRECATED("usa LZ4_compress_default() en su lugar") LZ4LIB_API int LZ4_compress_limitedOutput (const char* source, char* dest, int sourceSize, int maxOutputSize);
+LZ4_DEPRECATED("usa LZ4_compress_fast_extState() en su lugar") LZ4LIB_API int LZ4_compress_withState               (void* state, const char* source, char* dest, int inputSize);
+LZ4_DEPRECATED("usa LZ4_compress_fast_extState() en su lugar") LZ4LIB_API int LZ4_compress_limitedOutput_withState (void* state, const char* source, char* dest, int inputSize, int maxOutputSize);
+LZ4_DEPRECATED("usa LZ4_compress_fast_continue() en su lugar") LZ4LIB_API int LZ4_compress_continue                (LZ4_stream_t* LZ4_streamPtr, const char* source, char* dest, int inputSize);
+LZ4_DEPRECATED("usa LZ4_compress_fast_continue() en su lugar") LZ4LIB_API int LZ4_compress_limitedOutput_continue  (LZ4_stream_t* LZ4_streamPtr, const char* source, char* dest, int inputSize, int maxOutputSize);
 
 /* Obsolete decompression functions */
-LZ4_DEPRECATED("use LZ4_decompress_fast() instead") LZ4LIB_API int LZ4_uncompress (const char* source, char* dest, int outputSize);
-LZ4_DEPRECATED("use LZ4_decompress_safe() instead") LZ4LIB_API int LZ4_uncompress_unknownOutputSize (const char* source, char* dest, int isize, int maxOutputSize);
+LZ4_DEPRECATED("usa LZ4_decompress_fast() en su lugar") LZ4LIB_API int LZ4_uncompress (const char* source, char* dest, int outputSize);
+LZ4_DEPRECATED("usa LZ4_decompress_safe() en su lugar") LZ4LIB_API int LZ4_uncompress_unknownOutputSize (const char* source, char* dest, int isize, int maxOutputSize);
 
 /* Obsolete streaming functions; degraded functionality; do not use!
  *
@@ -552,14 +552,14 @@ LZ4_DEPRECATED("use LZ4_decompress_safe() instead") LZ4LIB_API int LZ4_uncompres
  * achieved will therefore be no better than compressing each chunk
  * independently.
  */
-LZ4_DEPRECATED("Use LZ4_createStream() instead") LZ4LIB_API void* LZ4_create (char* inputBuffer);
-LZ4_DEPRECATED("Use LZ4_createStream() instead") LZ4LIB_API int   LZ4_sizeofStreamState(void);
-LZ4_DEPRECATED("Use LZ4_resetStream() instead") LZ4LIB_API  int   LZ4_resetStreamState(void* state, char* inputBuffer);
-LZ4_DEPRECATED("Use LZ4_saveDict() instead") LZ4LIB_API     char* LZ4_slideInputBuffer (void* state);
+LZ4_DEPRECATED("Usa LZ4_createStream() en su lugar") LZ4LIB_API void* LZ4_create (char* inputBuffer);
+LZ4_DEPRECATED("Usa LZ4_createStream() en su lugar") LZ4LIB_API int   LZ4_sizeofStreamState(void);
+LZ4_DEPRECATED("Usa LZ4_resetStream() en su lugar") LZ4LIB_API  int   LZ4_resetStreamState(void* state, char* inputBuffer);
+LZ4_DEPRECATED("Usa LZ4_saveDict() en su lugar") LZ4LIB_API     char* LZ4_slideInputBuffer (void* state);
 
 /* Obsolete streaming decoding functions */
-LZ4_DEPRECATED("use LZ4_decompress_safe_usingDict() instead") LZ4LIB_API int LZ4_decompress_safe_withPrefix64k (const char* src, char* dst, int compressedSize, int maxDstSize);
-LZ4_DEPRECATED("use LZ4_decompress_fast_usingDict() instead") LZ4LIB_API int LZ4_decompress_fast_withPrefix64k (const char* src, char* dst, int originalSize);
+LZ4_DEPRECATED("usa LZ4_decompress_safe_usingDict() en su lugar") LZ4LIB_API int LZ4_decompress_safe_withPrefix64k (const char* src, char* dst, int compressedSize, int maxDstSize);
+LZ4_DEPRECATED("usa LZ4_decompress_fast_usingDict() en su lugar") LZ4LIB_API int LZ4_decompress_fast_withPrefix64k (const char* src, char* dst, int originalSize);
 
 #endif /* LZ4_H_2983827168210 */
 

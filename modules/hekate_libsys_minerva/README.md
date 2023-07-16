@@ -1,8 +1,8 @@
 # Minerva Training Cell
 
-### Custom Nvidia Tegra X1 DRAM trainer.
+### Entrenador personalizado para DRAM Nvidia Tegra X1.
 
-For more, check [Here](https://github.com/CTCaer/minerva_tc).
+Para mas, entra [Aqui](https://github.com/CTCaer/minerva_tc).
 
 
 

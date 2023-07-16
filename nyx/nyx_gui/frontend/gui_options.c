@@ -123,7 +123,7 @@ lv_obj_t *create_window_autoboot(const char *win_title)
 	lv_win_set_style(win, LV_WIN_STYLE_BG, &win_bg_style);
 	lv_obj_set_size(win, LV_HOR_RES, LV_VER_RES);
 
-	close_btn = lv_win_add_btn(win, NULL, SYMBOL_CLOSE" Close", _win_autoboot_close_action);
+	close_btn = lv_win_add_btn(win, NULL, SYMBOL_CLOSE" Cerrar", _win_autoboot_close_action);
 
 	return win;
 }
@@ -188,8 +188,8 @@ static lv_res_t _autoboot_enable_more_action(lv_obj_t *btn)
 
 static void _create_autoboot_window()
 {
-	lv_obj_t *win = create_window_autoboot(SYMBOL_GPS" Auto Boot");
-	lv_win_add_btn(win, NULL, SYMBOL_POWER" Disable", _autoboot_disable_action);
+	lv_obj_t *win = create_window_autoboot(SYMBOL_GPS" Auto Iniciar");
+	lv_win_add_btn(win, NULL, SYMBOL_POWER" Desactivar", _autoboot_disable_action);
 
 	static lv_style_t h_style;
 	lv_style_copy(&h_style, &lv_style_transp);
@@ -209,7 +209,7 @@ static void _create_autoboot_window()
 	lv_label_set_static_text(label_sep, "");
 
 	lv_obj_t *label_txt = lv_label_create(h1, NULL);
-	lv_label_set_static_text(label_txt, "Main configurations");
+	lv_label_set_static_text(label_txt, "Configuraciones principales");
 	lv_obj_set_style(label_txt, lv_theme_get_current()->label.prim);
 	lv_obj_align(label_txt, label_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, -(LV_DPI / 4));
 
@@ -257,7 +257,7 @@ static void _create_autoboot_window()
 	lv_label_set_static_text(label_sep, "");
 
 	lv_obj_t *label_txt3 = lv_label_create(h2, NULL);
-	lv_label_set_static_text(label_txt3, "Ini folder configurations");
+	lv_label_set_static_text(label_txt3, "Configuraciones de carpeta ini");
 	lv_obj_set_style(label_txt3, lv_theme_get_current()->label.prim);
 	lv_obj_align(label_txt3, label_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, -LV_DPI / 11);
 
@@ -366,9 +366,9 @@ static lv_res_t _save_nyx_options_action(lv_obj_t *btn)
 	nyx_changes_made = false;
 
 	if (res)
-		lv_mbox_set_text(mbox, "#FF8000 Nyx Configuration#\n\n#96FF00 The configuration was saved to sd card!#");
+		lv_mbox_set_text(mbox, "#FF8000 Configuracion de Nyx#\n\n#96FF00 Configuracion guardada en la SD!#");
 	else
-		lv_mbox_set_text(mbox, "#FF8000 Nyx Configuration#\n\n#FFDD00 Failed to save the configuration#\n#FFDD00 to sd card!#");
+		lv_mbox_set_text(mbox, "#FF8000 Configuracion de Nyx#\n\n#FFDD00 Fallo al guardar configuracion#\n#FFDD00 en la SD!#");
 	lv_mbox_add_btns(mbox, mbox_btn_map, NULL);
 	lv_obj_align(mbox, NULL, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_set_top(mbox, true);
@@ -551,9 +551,9 @@ const u16 theme_colors[17] = {
 
 static lv_res_t _create_window_nyx_colors(lv_obj_t *btn)
 {
-	lv_obj_t *win = nyx_create_standard_window(SYMBOL_COPY" Nyx Color Theme");
-	lv_win_add_btn(win, NULL, SYMBOL_HINT" Toggle Background", _preset_bg_action);
-	lv_win_add_btn(win, NULL, SYMBOL_SAVE" Save & Reload", _save_theme_color_action);
+	lv_obj_t *win = nyx_create_standard_window(SYMBOL_COPY" Color de Tema de Nyx");
+	lv_win_add_btn(win, NULL, SYMBOL_HINT" Cambiar Fondo", _preset_bg_action);
+	lv_win_add_btn(win, NULL, SYMBOL_SAVE" Guardar y Recargar", _save_theme_color_action);
 	color_test.window = win;
 
 	// Set current theme colors.
@@ -613,7 +613,7 @@ static lv_res_t _create_window_nyx_colors(lv_obj_t *btn)
 	color_test.header2 = h2;
 
 	lv_obj_t *lbl_sample = lv_label_create(h2, NULL);
-	lv_label_set_static_text(lbl_sample, "Sample:");
+	lv_label_set_static_text(lbl_sample, "Ejemplo:");
 
 	lv_obj_t *lbl_test = lv_label_create(h2, NULL);
 	lv_label_set_long_mode(lbl_test, LV_LABEL_LONG_BREAK);
@@ -735,12 +735,12 @@ static lv_res_t _create_mbox_clock_edit(lv_obj_t *btn)
 	lv_obj_set_style(dark_bg, &mbox_darken);
 	lv_obj_set_size(dark_bg, LV_HOR_RES, LV_VER_RES);
 
-	static const char * mbox_btn_map[] = { "\251", "\222Done", "\222Cancel", "\251", "" };
+	static const char * mbox_btn_map[] = { "\251", "\222Hecho", "\222Cancelar", "\251", "" };
 	lv_obj_t *mbox = lv_mbox_create(dark_bg, NULL);
 	lv_mbox_set_recolor_text(mbox, true);
 	lv_obj_set_width(mbox, LV_HOR_RES / 9 * 6);
 
-	lv_mbox_set_text(mbox, "Enter #C7EA46 Date# and #C7EA46 Time# for Nyx\nThis will not alter the actual HW clock!");
+	lv_mbox_set_text(mbox, "Pon #C7EA46 Fecha# y #C7EA46 Hora# para Nyx\nEsto no alterara el reloj HW actual!");
 
 	// Get current time.
 	rtc_time_t time;
@@ -783,18 +783,18 @@ static lv_res_t _create_mbox_clock_edit(lv_obj_t *btn)
 	// Create month roller.
 	lv_obj_t *roller_month = lv_roller_create(h1, roller_year);
 	lv_roller_set_options(roller_month,
-		"January\n"
-		"February\n"
-		"March\n"
-		"April\n"
-		"May\n"
-		"June\n"
-		"July\n"
-		"August\n"
-		"September\n"
-		"October\n"
-		"November\n"
-		"December");
+		"Enero\n"
+		"Febrero\n"
+		"Marzo\n"
+		"Abril\n"
+		"Mayo\n"
+		"Junio\n"
+		"Julio\n"
+		"Agosto\n"
+		"Septiembre\n"
+		"Octubre\n"
+		"Noviembre\n"
+		"Diciembre");
 	lv_roller_set_selected(roller_month, time.month - 1, false);
 	lv_obj_align(roller_month, roller_year, LV_ALIGN_OUT_RIGHT_MID, 0, 0);
 	clock_ctxt.month = roller_month;
@@ -900,7 +900,7 @@ save_data:
 			// Save readable dump.
 			jc_bt_conn_t *bt = &jc_pad->bt_conn_l;
 			s_printf(data,
-				"[joycon_00]\ntype=%d\nmac=%02X:%02X:%02X:%02X:%02X:%02X\n"
+				"[joycon_00]\ntipo=%d\nmac=%02X:%02X:%02X:%02X:%02X:%02X\n"
 				"host=%02X:%02X:%02X:%02X:%02X:%02X\n"
 				"ltk=%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X\n\n",
 				bt->type, bt->mac[0], bt->mac[1], bt->mac[2], bt->mac[3], bt->mac[4], bt->mac[5],
@@ -909,7 +909,7 @@ save_data:
 				bt->ltk[8], bt->ltk[9], bt->ltk[10], bt->ltk[11], bt->ltk[12], bt->ltk[13], bt->ltk[14], bt->ltk[15]);
 			bt = &jc_pad->bt_conn_r;
 			s_printf(data + strlen(data),
-				"[joycon_01]\ntype=%d\nmac=%02X:%02X:%02X:%02X:%02X:%02X\n"
+				"[joycon_01]\ntipo=%d\nmac=%02X:%02X:%02X:%02X:%02X:%02X\n"
 				"host=%02X:%02X:%02X:%02X:%02X:%02X\n"
 				"ltk=%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X\n",
 				bt->type, bt->mac[0], bt->mac[1], bt->mac[2], bt->mac[3], bt->mac[4], bt->mac[5],
@@ -933,22 +933,22 @@ save_data:
 
 			f_mkdir("switchroot");
 
+			//! TODO: Add Accelerometer and Gyroscope calibration.
 			// Save Lite Gamepad Calibration data.
-			// Actual max/min are right/left and up/down offsets.
 			s_printf(data,
-				"lite_cal_lx_lof=0x%X\n"
+				"lite_cal_lx_min=0x%X\n"
 				"lite_cal_lx_cnt=0x%X\n"
-				"lite_cal_lx_rof=0x%X\n"
-				"lite_cal_ly_dof=0x%X\n"
+				"lite_cal_lx_max=0x%X\n"
+				"lite_cal_ly_min=0x%X\n"
 				"lite_cal_ly_cnt=0x%X\n"
-				"lite_cal_ly_uof=0x%X\n\n"
+				"lite_cal_ly_max=0x%X\n\n"
 
-				"lite_cal_rx_lof=0x%X\n"
+				"lite_cal_rx_min=0x%X\n"
 				"lite_cal_rx_cnt=0x%X\n"
-				"lite_cal_rx_rof=0x%X\n"
-				"lite_cal_ry_dof=0x%X\n"
+				"lite_cal_rx_max=0x%X\n"
+				"lite_cal_ry_min=0x%X\n"
 				"lite_cal_ry_cnt=0x%X\n"
-				"lite_cal_ry_uof=0x%X\n\n"
+				"lite_cal_ry_max=0x%X\n\n"
 
 				"acc_cal_off_x=0x%X\n"
 				"acc_cal_off_y=0x%X\n"
@@ -965,10 +965,10 @@ save_data:
 				"gyr_cal_scl_z=0x%X\n\n"
 
 				"device_bt_mac=%02X:%02X:%02X:%02X:%02X:%02X\n",
-				stick_cal_l->x_min, stick_cal_l->x_center, stick_cal_l->x_max,
-				stick_cal_l->y_min, stick_cal_l->y_center, stick_cal_l->y_max,
-				stick_cal_r->x_min, stick_cal_r->x_center, stick_cal_r->x_max,
-				stick_cal_r->y_min, stick_cal_r->y_center, stick_cal_r->y_max,
+				stick_cal_l->x_center - stick_cal_l->x_min, stick_cal_l->x_center, stick_cal_l->x_center + stick_cal_l->x_max,
+				stick_cal_l->y_center - stick_cal_l->y_min, stick_cal_l->y_center, stick_cal_l->y_center + stick_cal_l->y_max,
+				stick_cal_r->x_center - stick_cal_r->x_min, stick_cal_r->x_center, stick_cal_r->x_center + stick_cal_r->x_max,
+				stick_cal_r->y_center - stick_cal_r->y_min, stick_cal_r->y_center, stick_cal_r->y_center + stick_cal_r->y_max,
 				cal0->acc_offset[0],  cal0->acc_offset[1],  cal0->acc_offset[2],
 				cal0->acc_scale[0],   cal0->acc_scale[1],   cal0->acc_scale[2],
 				cal0->gyro_offset[0], cal0->gyro_offset[1], cal0->gyro_offset[2],
@@ -1002,58 +1002,58 @@ disabled:;
 		if (!nx_hoag)
 		{
 			s_printf(txt_buf,
-				"Dumping to SD card finished!\n"
-				"Saved to: #C7EA46 switchroot/joycon_mac.[bin/ini]#\n\n");
+				"Dumpeo a la SD finalizado!\n"
+				"Guardado en: #C7EA46 switchroot/joycon_mac.[bin/ini]#\n\n");
 
 			bool success = true;
 
 			// Check if pairing info was found.
 			if (joycon_found == 2)
-				strcat(txt_buf, "#C7EA46 Success!#\n#C7EA46 Found 2 out of 2 Joy-Con pairing data!#\n");
+				strcat(txt_buf, "#C7EA46 Exito!#\n#C7EA46 Encontr. 2 de 2 datos de emparej.!#\n");
 			else
 			{
-				s_printf(txt_buf + strlen(txt_buf), "#FF8000 Failed!#\n#FF8000 Warning:# Found #FFDD00 %d out of 2# pairing data!\n", joycon_found);
+				s_printf(txt_buf + strlen(txt_buf), "#FF8000 Error!#\n#FF8000 Adv:# Encontr. #FFDD00 %d de 2# datos de emparej.!\n", joycon_found);
 				success = false;
 			}
 
 			// Check if pairing was done in HOS.
 			if (is_l_hos && is_r_hos)
-				strcat(txt_buf, "#C7EA46 Both pairing data are HOS based!#");
+				strcat(txt_buf, "#C7EA46 Datos emparej. basados en HOS!#");
 			else if (!is_l_hos && is_r_hos)
 			{
-				strcat(txt_buf, "#FF8000 Warning:# #FFDD00 Left# pairing data is not HOS based!");
+				strcat(txt_buf, "#FF8000 Adv:# Datos emparej. #FFDD00 izq.# no basados en HOS!");
 				success = false;
 			}
 			else if (is_l_hos && !is_r_hos)
 			{
-				strcat(txt_buf, "#FF8000 Warning:# #FFDD00 Right# pairing data is not HOS based!");
+				strcat(txt_buf, "#FF8000 Adv:# Datos emparej. #FFDD00 der.# no basados en HOS!");
 				success = false;
 			}
 			else
 			{
-				strcat(txt_buf, "#FF8000 Warning:# #FFDD00 No# pairing data is HOS based!");
+				strcat(txt_buf, "#FF8000 Adv:# Datos emparej. #FFDD00 no# basados en HOS!Adv:# Datos emparej. #FFDD00 no# basados en HOS!");
 				success = false;
 			}
 
 			if (!success)
 				strcat(txt_buf,
-					"\n\n#FFDD00 Make sure that both Joy-Con are connected,#\n"
-					"#FFDD00 and that you paired them in HOS!#");
+					"\n\n#FFDD00 Fijese que ambos Joy-Con esten conectados,#\n"
+					"#FFDD00 y que esten emparejados en HOS!#");
 		}
 		else
 		{
 			s_printf(txt_buf,
-				"Dumping to SD card finished!\n"
-				"Saved to: #C7EA46 switchroot/lite_gamepad.cal#\n\n");
-			strcat(txt_buf, "#C7EA46 Success!#\n#C7EA46 Found Lite Gamepad data!#\n");
+				"Dumpeo a la SD finalizado!\n"
+				"Guardado en: #C7EA46 switchroot/lite_gamepad.cal#\n\n");
+			strcat(txt_buf, "#C7EA46 Exito!#\n#C7EA46 Encont. Datos de Gamepad Lite!#\n");
 		}
 	}
 	else
 	{
 		if (!nx_hoag)
-			s_printf(txt_buf, "#FFDD00 Failed to dump Joy-Con pairing info!#\n#FFDD00 Error: %d#", error);
+			s_printf(txt_buf, "#FFDD00 Fallo al dumpear info emparej.!#\n#FFDD00 Error: %d#", error);
 		else
-			s_printf(txt_buf, "#FFDD00 Failed to get Lite Gamepad info!#\n");
+			s_printf(txt_buf, "#FFDD00 Fallo al obt. info de Gamepad Lite!#\n");
 	}
 
 	lv_mbox_set_text(mbox, txt_buf);
@@ -1101,14 +1101,14 @@ static void _check_nyx_changes()
 		lv_obj_set_style(dark_bg, &mbox_darken);
 		lv_obj_set_size(dark_bg, LV_HOR_RES, LV_VER_RES);
 
-		static const char * mbox_btn_map[] = { "\222Save", "\222Cancel", "" };
+		static const char * mbox_btn_map[] = { "\222Guardar", "\222Cancelar", "" };
 		lv_obj_t * mbox = lv_mbox_create(dark_bg, NULL);
 		lv_mbox_set_recolor_text(mbox, true);
 
 		lv_mbox_set_text(mbox,
-			"#FF8000 Nyx configuration#\n\n"
-			"You changed the configuration!\n\n"
-			"Do you want to save it?");
+			"#FF8000 Configuracion de Nyx#\n\n"
+			"Cambiaste la configuracion!\n\n"
+			"Quieres guardarla?");
 
 		lv_mbox_add_btns(mbox, mbox_btn_map, _action_nyx_options_save);
 		lv_obj_set_width(mbox, LV_HOR_RES / 9 * 5);
@@ -1138,7 +1138,7 @@ lv_res_t create_win_nyx_options(lv_obj_t *parrent_btn)
 {
 	lv_theme_t *th = lv_theme_get_current();
 
-	lv_obj_t *win = nyx_create_window_custom_close_btn(SYMBOL_HOME" Nyx Settings", _action_win_nyx_options_close);
+	lv_obj_t *win = nyx_create_window_custom_close_btn(SYMBOL_HOME" Ajustes de Nyx", _action_win_nyx_options_close);
 
 	static lv_style_t h_style;
 	lv_style_copy(&h_style, &lv_style_transp);
@@ -1176,13 +1176,13 @@ lv_res_t create_win_nyx_options(lv_obj_t *parrent_btn)
 	lv_obj_t *btn = lv_btn_create(sw_h2, NULL);
 	lv_obj_t *label_btn = lv_label_create(btn, NULL);
 	lv_btn_set_fit(btn, true, true);
-	lv_label_set_static_text(label_btn, SYMBOL_COPY" Color Theme");
+	lv_label_set_static_text(label_btn, SYMBOL_COPY" Color de Tema");
 	lv_obj_align(btn, label_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, -LV_DPI / 5 + 3);
 	lv_btn_set_action(btn, LV_BTN_ACTION_CLICK, _create_window_nyx_colors);
 
 	lv_obj_t *label_txt2 = lv_label_create(sw_h2, NULL);
 	lv_label_set_recolor(label_txt2, true);
-	lv_label_set_static_text(label_txt2, "Select a color for all #00FFC8 highlights# in Nyx.\n");
+	lv_label_set_static_text(label_txt2, "Elije un color para los #00FFC8 destacados# en Nyx.\n");
 	lv_obj_set_style(label_txt2, &hint_small_style);
 	lv_obj_align(label_txt2, btn, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 3 - 8);
 
@@ -1194,7 +1194,7 @@ lv_res_t create_win_nyx_options(lv_obj_t *parrent_btn)
 	lv_obj_align(line_sep, label_txt2, LV_ALIGN_OUT_BOTTOM_LEFT, -(LV_DPI / 4), LV_DPI / 4);
 
 	lv_obj_t *label_txt = lv_label_create(l_cont, NULL);
-	lv_label_set_static_text(label_txt, SYMBOL_HOME" Home Screen");
+	lv_label_set_static_text(label_txt, SYMBOL_HOME" Pantalla Inicio");
 	lv_obj_set_style(label_txt, th->label.prim);
 	lv_obj_align(label_txt, line_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, LV_DPI / 4);
 
@@ -1202,10 +1202,10 @@ lv_res_t create_win_nyx_options(lv_obj_t *parrent_btn)
 	lv_obj_set_top(ddlist, true);
 	lv_ddlist_set_draw_arrow(ddlist, true);
 	lv_ddlist_set_options(ddlist,
-		"Main menu       \n"
-		"All Configs\n"
-		"Launch\n"
-		"More Configs");
+		"Menu Princip.   \n"
+		"Todas Config.\n"
+		"Lanzar\n"
+		"Mas Ajustes");
 	lv_ddlist_set_selected(ddlist, n_cfg.home_screen);
 	lv_ddlist_set_action(ddlist, _home_screen_action);
 	lv_obj_align(ddlist, label_txt, LV_ALIGN_OUT_RIGHT_MID, LV_DPI * 2 / 3, 0);
@@ -1213,9 +1213,9 @@ lv_res_t create_win_nyx_options(lv_obj_t *parrent_btn)
 	label_txt2 = lv_label_create(l_cont, NULL);
 	lv_label_set_recolor(label_txt2, true);
 	lv_label_set_static_text(label_txt2,
-		"Select what screen to show on Nyx boot.\n"
-		"#FF8000 All Configs:# #C7EA46 Combines More configs into Launch empty slots.#\n"
-		"#FF8000 Launch / More Configs:# #C7EA46 Uses the classic divided view.#");
+		"Selecciona que pantalla mostrara Nyx al iniciar.\n"
+		"#FF8000 Todos los ajust:# #C7EA46 Combina Mas Ajustes en slots para lanzar.#\n"
+		"#FF8000 Lanzar / Mas Ajustes:# #C7EA46 Usa la vista clasica dividida.#");
 	lv_obj_set_style(label_txt2, &hint_small_style);
 	lv_obj_align(label_txt2, label_txt, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 4);
 
@@ -1224,7 +1224,7 @@ lv_res_t create_win_nyx_options(lv_obj_t *parrent_btn)
 
 	// Create entries per line button.
 	lv_obj_t *btn2 = lv_btn_create(sw_h2, NULL);
-	nyx_create_onoff_button(th, sw_h2, btn2, SYMBOL_GPS" Extended Boot Entries", _entries_columns_action, true);
+	nyx_create_onoff_button(th, sw_h2, btn2, SYMBOL_GPS" Entradas de Arranque Extend.", _entries_columns_action, true);
 	lv_obj_align(btn2, line_sep, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 10);
 	if (n_cfg.entries_5_col)
 		lv_btn_set_state(btn2, LV_BTN_STATE_TGL_REL);
@@ -1233,9 +1233,9 @@ lv_res_t create_win_nyx_options(lv_obj_t *parrent_btn)
 	label_txt2 = lv_label_create(sw_h2, NULL);
 	lv_label_set_recolor(label_txt2, true);
 	lv_label_set_static_text(label_txt2,
-		"Sets the boot entries per line to 5. (Default is 4)\n"
-		"#C7EA46 This allows a total of 10 boot entries to be shown in Launch#\n"
-		"#C7EA46 and More Configs sections.#\n\n\n");
+		"Pone las entrad. de arranque por linea en 5 (por def. son 4)\n"
+		"#C7EA46 Permite mostrar un total de 10 entradas de arranque en las#\n"
+		"#C7EA46 secciones Lanzar y Mas Ajustes.#\n\n\n");
 	lv_obj_set_style(label_txt2, &hint_small_style);
 	lv_obj_align(label_txt2, btn2, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, LV_DPI / 12);
 
@@ -1247,15 +1247,15 @@ lv_res_t create_win_nyx_options(lv_obj_t *parrent_btn)
 	lv_obj_t *btn3 = lv_btn_create(sw_h3, NULL);
 	lv_obj_t *label_btn3 = lv_label_create(btn3, NULL);
 	lv_btn_set_fit(btn3, true, true);
-	lv_label_set_static_text(label_btn3, SYMBOL_DOWNLOAD" Dump Joy-Con BT");
+	lv_label_set_static_text(label_btn3, SYMBOL_DOWNLOAD" Dump. BT Joy-Con");
 	lv_obj_align(btn3, label_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, -LV_DPI / 3);
 	lv_btn_set_action(btn3, LV_BTN_ACTION_CLICK, _joycon_info_dump_action);
 
 	label_txt2 = lv_label_create(sw_h3, NULL);
 	lv_label_set_recolor(label_txt2, true);
 	lv_label_set_static_text(label_txt2,
-		"Allows you to save the Switch and Joy-Con MAC addresses\n"
-		"and the LTKs associated with them. For #C7EA46 Android# and #C7EA46 Linux#.");
+		"Permite guardar las MAC de la Switch y los Joy-Con y\n"
+		"los LTKs asociados con ellos. Para #C7EA46 Android# y #C7EA46 Linux#.");
 	lv_obj_set_style(label_txt2, &hint_small_style);
 	lv_obj_align(label_txt2, btn3, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 4);
 
@@ -1264,7 +1264,7 @@ lv_res_t create_win_nyx_options(lv_obj_t *parrent_btn)
 
 	// Create Backup/Restore Verification list.
 	label_txt = lv_label_create(sw_h3, NULL);
-	lv_label_set_static_text(label_txt, SYMBOL_MODULES_ALT" Data Verification");
+	lv_label_set_static_text(label_txt, SYMBOL_MODULES_ALT" Verific. de Datos");
 	lv_obj_set_style(label_txt, th->label.prim);
 	lv_obj_align(label_txt, line_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, LV_DPI / 4);
 
@@ -1272,17 +1272,17 @@ lv_res_t create_win_nyx_options(lv_obj_t *parrent_btn)
 	lv_obj_set_top(ddlist2, true);
 	lv_ddlist_set_draw_arrow(ddlist2, true);
 	lv_ddlist_set_options(ddlist2,
-		"Off (Fastest)\n"
-		"Sparse (Fast)    \n"
-		"Full (Slow)\n"
-		"Full (Hashes)");
+		"No (Mas rap.)\n"
+		"Escaso (Rap.)    \n"
+		"Todo (Lento)\n"
+		"Todo (Hashes)");
 	lv_ddlist_set_selected(ddlist2, n_cfg.verification);
 	lv_obj_align(ddlist2, label_txt, LV_ALIGN_OUT_RIGHT_MID, LV_DPI * 3 / 8, 0);
 	lv_ddlist_set_action(ddlist2, _data_verification_action);
 
 	label_txt2 = lv_label_create(sw_h3, NULL);
-	lv_label_set_static_text(label_txt2, "Set the type of data verification done for backup and restore.\n"
-		"Can be canceled without losing the backup/restore.\n");
+	lv_label_set_static_text(label_txt2, "Pon el tipo de verificacion de datos para backup y restaurar.\n"
+		"Puede cancelarse sin perder el backup/restauracion.\n");
 	lv_obj_set_style(label_txt2, &hint_small_style);
 	lv_obj_align(label_txt2, label_txt, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 4);
 
@@ -1293,16 +1293,16 @@ lv_res_t create_win_nyx_options(lv_obj_t *parrent_btn)
 	lv_obj_t *btn5 = lv_btn_create(sw_h3, NULL);
 	lv_obj_t *label_btn5 = lv_label_create(btn5, NULL);
 	lv_btn_set_fit(btn5, true, true);
-	lv_label_set_static_text(label_btn5, SYMBOL_CLOCK" Clock (Offset)");
+	lv_label_set_static_text(label_btn5, SYMBOL_CLOCK" Reloj (Offset)");
 	lv_obj_align(btn5, line_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, LV_DPI / 4);
 	lv_btn_set_action(btn5, LV_BTN_ACTION_CLICK, _create_mbox_clock_edit);
 
 	label_txt2 = lv_label_create(sw_h3, NULL);
 	lv_label_set_recolor(label_txt2, true);
 	lv_label_set_static_text(label_txt2,
-		"Change clock offset manually.\n"
-		"#C7EA46 The entered Date and Time will be converted to an offset#\n"
-		"#C7EA46 automatically. This will be also used for FatFS operations.#");
+		"Cambia el offset del reloj manualmente.\n"
+		"#C7EA46 La fecha y hora introducidas se convertiran a offset#\n"
+		"#C7EA46 automaticamente. Esto se usara para operaciones FatFS.#");
 	lv_obj_set_style(label_txt2, &hint_small_style);
 	lv_obj_align(label_txt2, btn5, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 4);
 
@@ -1368,14 +1368,14 @@ void create_tab_options(lv_theme_t *th, lv_obj_t *parent)
 	lv_label_set_recolor(label_btn, true);
 	lv_btn_set_fit(btn, true, true);
 	lv_btn_set_toggle(btn, true);
-	lv_label_set_static_text(label_btn, SYMBOL_GPS" Auto Boot #00FFC9   ON #");
+	lv_label_set_static_text(label_btn, SYMBOL_GPS" Auto Iniciar #00FFC9   ON #");
 	lv_btn_set_action(btn, LV_BTN_ACTION_CLICK, _autoboot_hide_delay_action);
 	lv_obj_align(btn, label_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, -LV_DPI / 18 + 6);
 	lv_btn_set_fit(btn, false, false);
 	autoboot_btn = btn;
 
 	lv_obj_t *label_txt2 = lv_label_create(sw_h2, NULL);
-	lv_label_set_static_text(label_txt2, "Choose which boot entry or payload to automatically boot\nwhen injecting.");
+	lv_label_set_static_text(label_txt2, "Elije cual entrada de arranque o payload iniciara\nautomaticamente al encender.");
 	lv_obj_set_style(label_txt2, &hint_small_style);
 	lv_obj_align(label_txt2, btn, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 3 - 4);
 
@@ -1387,7 +1387,7 @@ void create_tab_options(lv_theme_t *th, lv_obj_t *parent)
 
 	// Create Boot time delay list.
 	lv_obj_t *label_txt = lv_label_create(l_cont, NULL);
-	lv_label_set_static_text(label_txt, SYMBOL_CLOCK" Boot Time Delay  ");
+	lv_label_set_static_text(label_txt, SYMBOL_CLOCK" Retardo Inicio   ");
 	lv_obj_set_style(label_txt, th->label.prim);
 	lv_obj_align(label_txt, line_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, LV_DPI / 4);
 
@@ -1395,13 +1395,13 @@ void create_tab_options(lv_theme_t *th, lv_obj_t *parent)
 	lv_obj_set_top(ddlist, true);
 	lv_ddlist_set_draw_arrow(ddlist, true);
 	lv_ddlist_set_options(ddlist,
-		"No bootlogo    \n"
-		"1 second\n"
-		"2 seconds\n"
-		"3 seconds\n"
-		"4 seconds\n"
-		"5 seconds\n"
-		"6 seconds");
+		"Sin logo       \n"
+		"1 segundo\n"
+		"2 segundos\n"
+		"3 segundos\n"
+		"4 segundos\n"
+		"5 segundos\n"
+		"6 segundos");
 	lv_ddlist_set_selected(ddlist, 3);
 	lv_obj_align(ddlist, label_txt, LV_ALIGN_OUT_RIGHT_MID, LV_DPI / 4, 0);
 	lv_ddlist_set_action(ddlist, _autoboot_delay_action);
@@ -1418,8 +1418,8 @@ void create_tab_options(lv_theme_t *th, lv_obj_t *parent)
 	label_txt2 = lv_label_create(l_cont, NULL);
 	lv_label_set_recolor(label_txt2, true);
 	lv_label_set_static_text(label_txt2,
-		"Set how long to show bootlogo when autoboot is enabled.\n"
-		"#C7EA46 You can press# #FF8000 VOL-# #C7EA46 during that time to enter hekate's menu.#\n");
+		"Tiempo que sale el logo cuando Auto Iniciar esta activo.\n"
+		"#C7EA46 Si pulsas # #FF8000 VOL-# #C7EA46 en ese tiempo entraras en hekate.#\n");
 	lv_obj_set_style(label_txt2, &hint_small_style);
 	lv_obj_align(label_txt2, label_txt, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 4);
 
@@ -1434,9 +1434,9 @@ void create_tab_options(lv_theme_t *th, lv_obj_t *parent)
 	label_txt2 = lv_label_create(sw_h2, NULL);
 	lv_label_set_recolor(label_txt2, true);
 	lv_label_set_static_text(label_txt2,
-		"It checks fuses and applies the patch automatically\n"
-		"if higher firmware. It is now a global config and set\n"
-		"at auto by default. (ON: Auto)\n\n\n");
+		"Comprueba fusibles y aplica el parche automaticamente\n"
+		"si el firmware es superior. Es una configuracion global\n"
+		"y esta en automatico por defecto. (ON: Auto)\n\n\n");
 	lv_obj_set_style(label_txt2, &hint_small_style);
 	lv_obj_align(label_txt2, btn2, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, LV_DPI / 12);
 
@@ -1445,13 +1445,13 @@ void create_tab_options(lv_theme_t *th, lv_obj_t *parent)
 
 	// Create Auto HOS Power Off button.
 	lv_obj_t *btn3 = lv_btn_create(sw_h3, NULL);
-	nyx_create_onoff_button(th, sw_h3, btn3, SYMBOL_POWER" Auto HOS Power Off", auto_hos_poweroff_toggle, true);
+	nyx_create_onoff_button(th, sw_h3, btn3, SYMBOL_POWER" Auto apagado de HOS", auto_hos_poweroff_toggle, true);
 	lv_obj_align(btn3, label_sep, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
 
 	label_txt2 = lv_label_create(sw_h3, NULL);
 	lv_label_set_static_text(label_txt2,
-		"When Shutdown is used from HOS, the device wakes up after\n"
-		"15s. Enable this to automatically power off on the next\npayload injection.");
+		"Cuando apagas la Switch desde el HOS, se enciende a los\n"
+		"15s. Activalo para apagarla automaticamente en la\nsiguiente inyeccion de payload.");
 	lv_obj_set_style(label_txt2, &hint_small_style);
 	lv_obj_align(label_txt2, btn3, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, LV_DPI / 12);
 
@@ -1460,7 +1460,7 @@ void create_tab_options(lv_theme_t *th, lv_obj_t *parent)
 
 	// Create Backlight slider.
 	label_txt = lv_label_create(sw_h3, NULL);
-	lv_label_set_static_text(label_txt, SYMBOL_BRIGHTNESS" Backlight");
+	lv_label_set_static_text(label_txt, SYMBOL_BRIGHTNESS" Brillo");
 	lv_obj_set_style(label_txt, th->label.prim);
 	lv_obj_align(label_txt, line_sep, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, LV_DPI / 4);
 
@@ -1473,7 +1473,7 @@ void create_tab_options(lv_theme_t *th, lv_obj_t *parent)
 	lv_obj_align(slider, label_txt, LV_ALIGN_OUT_RIGHT_MID, LV_DPI * 20 / 15, 0);
 
 	label_txt2 = lv_label_create(sw_h3, NULL);
-	lv_label_set_static_text(label_txt2, "Set backlight brightness.\n\n");
+	lv_label_set_static_text(label_txt2, "Establece el brillo de la pantalla.\n\n");
 	lv_obj_set_style(label_txt2, &hint_small_style);
 	lv_obj_align(label_txt2, label_txt, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 4);
 
@@ -1482,14 +1482,15 @@ void create_tab_options(lv_theme_t *th, lv_obj_t *parent)
 
 	// Create Update r2p button.
 	lv_obj_t *btn4 = lv_btn_create(sw_h3, NULL);
-	nyx_create_onoff_button(th, sw_h3, btn4, SYMBOL_REFRESH" Update Reboot 2 Payload", _update_r2p_action, true);
+	nyx_create_onoff_button(th, sw_h3, btn4, SYMBOL_REFRESH" Act. Reinicio 2 Payload", _update_r2p_action, true);
 	lv_obj_align(btn4, line_sep, LV_ALIGN_OUT_BOTTOM_LEFT, 0, LV_DPI / 10);
 
 	label_txt2 = lv_label_create(sw_h3, NULL);
 	lv_label_set_recolor(label_txt2, true);
 	lv_label_set_static_text(label_txt2,
-		"If #FF8000 FSS0# is used in the selected boot entry, the reboot 2 payload\n"
-		"binary will be checked and forced to be updated to hekate.\n\n\n\n");
+		"Si #FF8000 FSS0# es usado en la entrada de arranque seleccionada, el\n"
+		"binario de reiniciar a payload se comprobara y forzara la\n"
+		"actualizacion de hekate\n\n\n");
 	lv_obj_set_style(label_txt2, &hint_small_style);
 	lv_obj_align(label_txt2, btn4, LV_ALIGN_OUT_BOTTOM_LEFT, LV_DPI / 4, LV_DPI / 12);
 

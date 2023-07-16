@@ -197,7 +197,7 @@ el_status el_load(el_ctx *ctx, el_alloc_cb alloc)
 		if (!dest)
 			return EL_ENOMEM;
 
-		EL_DEBUG("Loading seg fileoff %x, vaddr %x to %p\n",
+		EL_DEBUG("Cargando seg fileoff %x, vaddr %x a %p\n",
 				ph.p_offset, ph.p_vaddr, dest);
 
 		/* read loaded portion */
@@ -282,7 +282,7 @@ el_status el_relocate(el_ctx *ctx)
 
 	if (ri.entrysize != sizeof(Elf_Rel) && ri.tablesize)
 	{
-		EL_DEBUG("Relocation size %u doesn't match expected %u\n",
+		EL_DEBUG("Tam. de reubicacion %u no coincide %u\n",
 				ri.entrysize, sizeof(Elf_Rel));
 		return EL_BADREL;
 	}
@@ -302,7 +302,7 @@ el_status el_relocate(el_ctx *ctx)
 
 	if (ri.entrysize != sizeof(Elf_RelA) && ri.tablesize)
 	{
-		EL_DEBUG("Relocation size %u doesn't match expected %u\n",
+		EL_DEBUG("Tam. de reubicacion %u no coincide %u\n",
 				ri.entrysize, sizeof(Elf_RelA));
 		return EL_BADREL;
 	}

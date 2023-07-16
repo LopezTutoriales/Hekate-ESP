@@ -214,7 +214,7 @@ key_found:
 
 	for (u32 i = 0; i < 4; i++)
 	{
-DPRINTF("sec %d has size %08X\n", i, hdr->sec_size[i]);
+DPRINTF("sec %d. tam: %08X\n", i, hdr->sec_size[i]);
 		if (!hdr->sec_size[i])
 			continue;
 

@@ -405,13 +405,13 @@ void secmon_exo_check_panic()
 	gfx_clear_grey(0x1B);
 	gfx_con_setpos(0, 0);
 
-	WPRINTF("Panic occurred while running Atmosphere.\n\n");
-	WPRINTFARGS("Title ID: %08X%08X", (u32)((u64)rpt->title_id >> 32), (u32)rpt->title_id);
+	WPRINTF("Ocurrio un error al ejecutar Atmosphere.\n\n");
+	WPRINTFARGS("ID Titulo: %08X%08X", (u32)((u64)rpt->title_id >> 32), (u32)rpt->title_id);
 	WPRINTFARGS("Error:    %s (0x%x)\n", get_error_desc(rpt->error_desc), rpt->error_desc);
 
 	// Check if mixed atmosphere sysmodules.
 	if ((u32)rpt->title_id == HOS_PID_BOOT2)
-		WPRINTF("Mismatched Atmosphere files?\n");
+		WPRINTF("Desajuste en archivos de Atmosphere?\n");
 
 	// Save context to the SD card.
 	char filepath[0x40];
@@ -424,14 +424,14 @@ void secmon_exo_check_panic()
 	if (!sd_save_to_file((void *)rpt, sizeof(atm_fatal_error_ctx), filepath))
 	{
 		gfx_con.fntsz = 8;
-		WPRINTFARGS("Report saved to %s\n", filepath);
+		WPRINTFARGS("Reporte guardado en %s\n", filepath);
 		gfx_con.fntsz = 16;
 	}
 
 	// Change magic to invalid, to prevent double-display of error/bootlooping.
 	rpt->magic = 0;
 
-	gfx_printf("\n\nPress POWER to continue.\n");
+	gfx_printf("\n\nPulsa POWER para continuar.\n");
 
 	display_backlight_brightness(100, 1000);
 	msleep(1000);

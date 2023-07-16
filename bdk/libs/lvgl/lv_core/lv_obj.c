@@ -75,7 +75,7 @@ void lv_init(void)
     LV_GC_ROOT(_lv_disp_list) = NULL;
     LV_GC_ROOT(_lv_indev_list) = NULL;
 
-    LV_LOG_TRACE("lv_init started");
+    LV_LOG_TRACE("lv_init iniciado");
 
     /*Initialize the lv_misc modules*/
     lv_mem_init();
@@ -118,7 +118,7 @@ void lv_init(void)
 #endif
 
     _lv_initialized = true;
-    LV_LOG_INFO("lv_init ready");
+    LV_LOG_INFO("lv_init listo");
 }
 
 /*--------------------
@@ -138,7 +138,7 @@ lv_obj_t * lv_obj_create(lv_obj_t * parent, const  lv_obj_t * copy)
     lv_obj_t * new_obj = NULL;
     /*Create a screen if the parent is NULL*/
     if(parent == NULL) {
-        LV_LOG_TRACE("Screen create started");
+        LV_LOG_TRACE("Crear ventana iniciado");
 
         new_obj = lv_ll_ins_head(&LV_GC_ROOT(_lv_scr_ll));
         lv_mem_assert(new_obj);
@@ -199,11 +199,11 @@ lv_obj_t * lv_obj_create(lv_obj_t * parent, const  lv_obj_t * copy)
 
         new_obj->ext_attr = NULL;
 
-        LV_LOG_INFO("Screen create ready");
+        LV_LOG_INFO("Crear ventana listo");
     }
     /*parent != NULL create normal obj. on a parent*/
     else {
-        LV_LOG_TRACE("Object create started");
+        LV_LOG_TRACE("Crear objeto iniciado");
 
         new_obj = lv_ll_ins_head(&(parent)->child_ll);
         lv_mem_assert(new_obj);
@@ -316,7 +316,7 @@ lv_obj_t * lv_obj_create(lv_obj_t * parent, const  lv_obj_t * copy)
             lv_obj_set_pos(new_obj, 0, 0);
         }
 
-        LV_LOG_INFO("Object create ready");
+        LV_LOG_INFO("Crear objeto listo");
     }
 
 
@@ -486,12 +486,12 @@ void lv_scr_load(lv_obj_t * scr)
 void lv_obj_set_parent(lv_obj_t * obj, lv_obj_t * parent)
 {
     if(obj->par == NULL) {
-        LV_LOG_WARN("Can't set the parent of a screen");
+        LV_LOG_WARN("Imposible establecer pantalla padre");
         return;
     }
 
     if(parent == NULL) {
-        LV_LOG_WARN("Can't set parent == NULL to an object");
+        LV_LOG_WARN("Imposible establecer padre == NULL a un objeto");
         return;
     }
 
@@ -958,7 +958,7 @@ void lv_obj_realign(lv_obj_t * obj)
     else lv_obj_align(obj, obj->realign.base, obj->realign.align, obj->realign.xofs, obj->realign.yofs);
 #else
     (void) obj;
-    LV_LOG_WARN("lv_obj_realaign: no effect because LV_OBJ_REALIGN = 0");
+    LV_LOG_WARN("lv_obj_realaign: no afecta porque LV_OBJ_REALIGN = 0");
 #endif
 }
 
@@ -974,7 +974,7 @@ void lv_obj_set_auto_realign(lv_obj_t * obj, bool en)
 #else
     (void) obj;
     (void) en;
-    LV_LOG_WARN("lv_obj_set_auto_realign: no effect because LV_OBJ_REALIGN = 0");
+    LV_LOG_WARN("lv_obj_set_auto_realign: no afecta porque LV_OBJ_REALIGN = 0");
 #endif
 }
 

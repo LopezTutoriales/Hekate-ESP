@@ -140,7 +140,7 @@ lv_res_t launch_payload(lv_obj_t *list)
 	FIL fp;
 	if (f_open(&fp, path, FA_READ))
 	{
-		EPRINTFARGS("Payload file is missing!\n(%s)", path);
+		EPRINTFARGS("Archivo de Payload no esta!!\n(%s)", path);
 
 		goto out;
 	}
@@ -159,7 +159,7 @@ lv_res_t launch_payload(lv_obj_t *list)
 		{
 			f_close(&fp);
 
-			EPRINTF("Coreboot not allowed on Mariko!");
+			EPRINTF("Coreboot no permitido en Mariko!");
 
 			goto out;
 		}
@@ -357,10 +357,10 @@ static void _show_errors(int sd_error)
 	switch (sd_error)
 	{
 	case SD_MOUNT_ERROR:
-		WPRINTF("Failed to init or mount SD!\n");
+		WPRINTF("Error al iniciar/montar SD!\n");
 		goto error_occured;
 	case SD_FILE_ERROR:
-		WPRINTF("Failed to load GUI resources!\nres.pak not found or corrupted.\n");
+		WPRINTF("Error al cargar GUI!\nres.pak no esta o corrupto.\n");
 		goto error_occured;
 	case SD_NO_ERROR:
 	default:
@@ -369,7 +369,7 @@ static void _show_errors(int sd_error)
 
 	if (*excp_enabled == EXCP_MAGIC)
 	{
-		WPRINTFARGS("Nyx exception occurred (LR %08X):\n", *excp_lr);
+		WPRINTFARGS("Excepcion en Nyx (LR %08X):\n", *excp_lr);
 		switch (*excp_type)
 		{
 		case EXCP_TYPE_RESET:
@@ -393,7 +393,7 @@ static void _show_errors(int sd_error)
 		*excp_enabled = 0;
 
 error_occured:
-		WPRINTF("Press any key to reload Nyx...");
+		WPRINTF("Pulsa un boton para recargar Nyx");
 
 		msleep(1000);
 		btn_wait();
@@ -514,7 +514,7 @@ void ipl_main()
 	uart_init(DEBUG_UART_PORT, DEBUG_UART_BAUDRATE, UART_AO_TX_AO_RX);
 	uart_invert(DEBUG_UART_PORT, DEBUG_UART_INVERT, UART_INVERT_TXD);
 
-	uart_send(DEBUG_UART_PORT, (u8 *)"hekate-NYX: Hello!\r\n", 20);
+	uart_send(DEBUG_UART_PORT, (u8 *)"hekate-NYX: Hola!\r\n", 20);
 	uart_wait_xfer(DEBUG_UART_PORT, UART_TX_IDLE);
 #endif
 

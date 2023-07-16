@@ -299,7 +299,7 @@ static void indev_proc_task(void * param)
     (void)param;
 
 
-    LV_LOG_TRACE("indev task started");
+    LV_LOG_TRACE("Tarea indev iniciada");
 
     lv_indev_data_t data;
     lv_indev_t * i;
@@ -342,7 +342,7 @@ static void indev_proc_task(void * param)
 
     indev_act = NULL;   /*End of indev processing, so no act indev*/
 
-    LV_LOG_TRACE("indev task finished");
+    LV_LOG_TRACE("Tarea indev finalizada");
 }
 
 

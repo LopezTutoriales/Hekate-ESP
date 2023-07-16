@@ -74,11 +74,11 @@ void lv_lang_set_text_func(const void * (*fp)(uint16_t))
 const void * lv_lang_get_text(uint16_t txt_id)
 {
     if(get_txt == NULL) {
-        LV_LOG_WARN("lv_lang_get_text: text_func is not specified");
+        LV_LOG_WARN("lv_lang_get_text: text_func no especificada");
         return NULL;                    /*No text_get function specified */
     }
     if(txt_id == LV_LANG_TXT_ID_NONE) {
-        LV_LOG_WARN("lv_lang_get_text: attempts to get invalid text ID");
+        LV_LOG_WARN("lv_lang_get_text: intento de objener ID de texto inval.");
         return NULL;      /*Invalid txt_id*/
     }
 

@@ -96,7 +96,7 @@ void lv_group_add_obj(lv_group_t * group, lv_obj_t * obj)
         if(lv_obj_is_focused(obj)) {
             lv_group_refocus(obj->group_p);
 
-            LV_LOG_INFO("group: assign object to an other group");
+            LV_LOG_INFO("grupo: asigna obj. a otro grupo");
         }
     }
 

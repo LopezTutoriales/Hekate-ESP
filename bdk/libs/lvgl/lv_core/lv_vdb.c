@@ -97,7 +97,7 @@ void lv_vdb_flush(void)
 {
     lv_vdb_t * vdb_act = lv_vdb_get();
     if(!vdb_act) {
-        LV_LOG_WARN("Invalid VDB pointer");
+        LV_LOG_WARN("Puntero VDB no valido");
         return;
     }
 

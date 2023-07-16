@@ -205,7 +205,7 @@ static void _launch_payload(char *path, bool update, bool clear_screen)
 	if (f_open(&fp, path, FA_READ))
 	{
 		gfx_con.mute = false;
-		EPRINTFARGS("Payload file is missing!\n(%s)", path);
+		EPRINTFARGS("Falta archivo de payload!\n(%s)", path);
 
 		goto out;
 	}
@@ -225,7 +225,7 @@ static void _launch_payload(char *path, bool update, bool clear_screen)
 			f_close(&fp);
 
 			gfx_con.mute = false;
-			EPRINTF("Coreboot not allowed on Mariko!");
+			EPRINTF("Coreboot no permitido en Mariko!");
 
 			goto out;
 		}
@@ -285,7 +285,7 @@ out:
 	if (!update)
 	{
 		gfx_con.mute = false;
-		EPRINTF("Failed to launch payload!");
+		EPRINTF("Error al lanzar payload!");
 	}
 }
 
@@ -337,7 +337,7 @@ static void _launch_payloads()
 	if (i > 0)
 	{
 		memset(&ments[i + 2], 0, sizeof(ment_t));
-		menu_t menu = { ments, "Choose a payload", 0, 0 };
+		menu_t menu = { ments, "Elije un payload", 0, 0 };
 
 		file_sec = (char *)tui_do_menu(&menu);
 
@@ -352,7 +352,7 @@ static void _launch_payloads()
 		}
 	}
 	else
-		EPRINTF("No payloads found.");
+		EPRINTF("Payloads no encontrados.");
 
 	free(ments);
 	free(filelist);
@@ -390,14 +390,14 @@ static void _launch_ini_list()
 	// Check that ini files exist and parse them.
 	if (!ini_parse(&ini_list_sections, "bootloader/ini", true))
 	{
-		EPRINTF("No .ini files in bootloader/ini!");
+		EPRINTF("No hay archivos .ini en bootloader/ini!");
 		goto parse_failed;
 	}
 
 	// Build configuration menu.
 	ment_t *ments = (ment_t *)malloc(sizeof(ment_t) * (max_entries + 3));
 	ments[0].type    = MENT_BACK;
-	ments[0].caption = "Back";
+	ments[0].caption = "Volver";
 
 	ments[1].type    = MENT_CHGLINE;
 
@@ -425,7 +425,7 @@ static void _launch_ini_list()
 	{
 		memset(&ments[sec_idx], 0, sizeof(ment_t));
 		menu_t menu = {
-			ments, "Launch ini entries", 0, 0
+			ments, "Iniciar entradas ini", 0, 0
 		};
 
 		cfg_sec = (ini_sec_t *)tui_do_menu(&menu);
@@ -444,7 +444,7 @@ static void _launch_ini_list()
 
 			if (emummc_path && !emummc_set_path(emummc_path))
 			{
-				EPRINTF("emupath is wrong!");
+				EPRINTF("emupath esta equivocado!");
 				goto wrong_emupath;
 			}
 		}
@@ -457,7 +457,7 @@ static void _launch_ini_list()
 		}
 	}
 	else
-		EPRINTF("No extra configs found.");
+		EPRINTF("No hay ajustes extras.");
 	free(ments);
 
 parse_failed:
@@ -522,7 +522,7 @@ static void _launch_config()
 	// Build configuration menu.
 	ment_t *ments = (ment_t *)malloc(sizeof(ment_t) * (max_entries + 6));
 	ments[0].type    = MENT_BACK;
-	ments[0].caption = "Back";
+	ments[0].caption = "Volver";
 
 	ments[1].type    = MENT_CHGLINE;
 
@@ -531,7 +531,7 @@ static void _launch_config()
 	ments[2].handler = _launch_payloads;
 
 	ments[3].type    = MENT_HANDLER;
-	ments[3].caption = "More configs...";
+	ments[3].caption = "Mas ajustes...";
 	ments[3].handler = _launch_ini_list;
 
 	ments[4].type    = MENT_CHGLINE;
@@ -559,14 +559,14 @@ static void _launch_config()
 	if (sec_idx < 6)
 	{
 		ments[sec_idx].type    = MENT_CAPTION;
-		ments[sec_idx].caption = "No main configs found...";
+		ments[sec_idx].caption = "Ajustes princip. no encontrados...";
 		ments[sec_idx].color   = TXT_CLR_WARNING;
 		sec_idx++;
 	}
 
 	memset(&ments[sec_idx], 0, sizeof(ment_t));
 	menu_t menu = {
-		ments, "Launch configurations", 0, 0
+		ments, "Iniciar ajustes", 0, 0
 	};
 
 	cfg_sec = (ini_sec_t *)tui_do_menu(&menu);
@@ -585,7 +585,7 @@ static void _launch_config()
 
 		if (emummc_path && !emummc_set_path(emummc_path))
 		{
-			EPRINTF("emupath is wrong!");
+			EPRINTF("emupath esta equivocado!");
 			goto wrong_emupath;
 		}
 	}
@@ -602,7 +602,7 @@ static void _launch_config()
 parse_failed:
 	if (!cfg_sec)
 	{
-		gfx_printf("\nPress any key...\n");
+		gfx_printf("\nPulsa cualquier tecla...\n");
 		goto out;
 	}
 
@@ -664,9 +664,9 @@ static void _nyx_load_run()
 		h_cfg.errors |= ERR_SYSOLD_NYX;
 
 		gfx_con_setpos(0, 0);
-		WPRINTF("Old Nyx GUI found! There will be dragons!\n");
-		WPRINTF("\nUpdate the bootloader folder!\n\n");
-		WPRINTF("Press any key...");
+		WPRINTF("Nyx GUI antiguo encontrado! Habra dragones!\n");
+		WPRINTF("\nActualiza la carpeta bootloader!\n\n");
+		WPRINTF("Pulsa cualquier tecla...");
 
 		msleep(1000);
 		btn_wait();
@@ -1034,7 +1034,7 @@ skip_list:
 		else if (emummc_path && !emummc_set_path(emummc_path))
 		{
 			gfx_con.mute = false;
-			EPRINTF("emupath is wrong!");
+			EPRINTF("emupath esta equivocado!");
 			goto wrong_emupath;
 		}
 
@@ -1049,7 +1049,7 @@ wrong_emupath:
 
 error:
 		gfx_con.mute = false;
-		gfx_printf("\nPress any key...\n");
+		gfx_printf("\nPulsa cualquier tecla...\n");
 		display_backlight_brightness(h_cfg.backlight, 1000);
 		msleep(500);
 		btn_wait();
@@ -1127,27 +1127,27 @@ static void _show_errors()
 
 		if (h_cfg.errors & ERR_SD_BOOT_EN)
 		{
-			WPRINTF("Failed to init or mount SD!\n");
+			WPRINTF("Error al iniciar/montar la SD!\n");
 
 			// Clear the module bits as to not cram the error screen.
 			h_cfg.errors &= ~(ERR_LIBSYS_LP0 | ERR_LIBSYS_MTC);
 		}
 
 		if (h_cfg.errors & ERR_LIBSYS_LP0)
-			WPRINTF("Missing LP0 (sleep) lib!\n");
+			WPRINTF("Falta libreria LP0 (sleep)!\n");
 		if (h_cfg.errors & ERR_LIBSYS_MTC)
-			WPRINTF("Missing Minerva lib!\n");
+			WPRINTF("Falta libreria Minerva!\n");
 
 		if (h_cfg.errors & (ERR_LIBSYS_LP0 | ERR_LIBSYS_MTC))
-			WPRINTF("\nUpdate bootloader folder!\n\n");
+			WPRINTF("\nActualiza la carpeta bootloader!\n\n");
 
 		if (h_cfg.errors & ERR_EXCEPTION)
 		{
-			WPRINTFARGS("hekate exception occurred (LR %08X):\n", *excp_lr);
+			WPRINTFARGS("Excepcion en Hekate (LR %08X):\n", *excp_lr);
 			switch (*excp_type)
 			{
 			case EXCP_TYPE_WDT:
-				WPRINTF("Hang detected in LP0/Minerva!");
+				WPRINTF("Bloqueo detectado en LP0/Minerva!");
 				break;
 			case EXCP_TYPE_RESET:
 				WPRINTF("RESET");
@@ -1171,17 +1171,17 @@ static void _show_errors()
 
 		if (h_cfg.errors & ERR_L4T_KERNEL)
 		{
-			WPRINTF("Kernel panic occurred!\n");
+			WPRINTF("Ocurrio un Kernel Panic!\n");
 			if (!(h_cfg.errors & ERR_SD_BOOT_EN))
 			{
 				if (!sd_save_to_file((void *)PSTORE_ADDR, PSTORE_SZ, "L4T_panic.bin"))
-					WPRINTF("PSTORE saved to L4T_panic.bin");
+					WPRINTF("PSTORE guardado en L4T_panic.bin");
 				pstore_buf_t *buf = (pstore_buf_t *)(PSTORE_ADDR + PSTORE_LOG_OFFSET);
 				if (buf->sig == PSTORE_RAM_SIG && buf->size && buf->size < 0x80000)
 				{
 					u32 log_offset = PSTORE_ADDR + PSTORE_LOG_OFFSET + sizeof(pstore_buf_t);
 					if (!sd_save_to_file((void *)log_offset, buf->size, "L4T_panic.txt"))
-						WPRINTF("Log saved to L4T_panic.txt");
+						WPRINTF("Log guardado en L4T_panic.txt");
 				}
 			}
 			gfx_puts("\n");
@@ -1197,11 +1197,11 @@ static void _show_errors()
 			b = (b << 0)  | (b << 4);
 			u32 color = r | g | b;
 
-			WPRINTF("HOS panic occurred!\n");
+			WPRINTF("Ocurrio un HOS Panic!\n");
 			gfx_printf("Color: %k####%k, Code: %02X\n\n", color, TXT_CLR_DEFAULT, panic_status);
 		}
 
-		WPRINTF("Press any key...");
+		WPRINTF("Pulsa cualquier tecla...");
 
 		msleep(1000); // Guard against injection VOL+.
 		btn_wait();
@@ -1380,25 +1380,27 @@ static void _about()
 {
 	static const char credits[] =
 		"\nhekate   (c) 2018,      naehrwert, st4rk\n\n"
-		"         (c) 2018-2022, CTCaer\n\n"
+		"         (c) 2018-2023, CTCaer\n\n"
 		" ___________________________________________\n\n"
-		"Thanks to: %kderrek, nedwill, plutoo,\n"
+		"Gracias a: %kderrek, nedwill, plutoo,\n"
 		"           shuffle2, smea, thexyz, yellows8%k\n"
 		" ___________________________________________\n\n"
-		"Greetings to: fincs, hexkyz, SciresM,\n"
+		"Saludos a: fincs, hexkyz, SciresM,\n"
 		"              Shiny Quagsire, WinterMute\n"
 		" ___________________________________________\n\n"
-		"Open source and free packages used:\n\n"
+		"Paquetes de codigo abierto y libres usados:\n\n"
 		" - FatFs R0.13c\n"
 		"   (c) 2018, ChaN\n\n"
 		" - bcl-1.2.0\n"
 		"   (c) 2003-2006, Marcus Geelnard\n\n"
 		" - Atmosphere (Exo st/types, prc id patches)\n"
-		"   (c) 2018-2019, Atmosphere-NX\n\n"
+		"   (c) 2018-2019, Atmosphere-NX\n"
 		" - elfload\n"
 		"   (c) 2014, Owen Shepherd\n"
 		"   (c) 2018, M4xw\n"
-		" ___________________________________________\n\n";
+		" ___________________________________________\n"
+		"Traduccion: Lopez Tutoriales"
+		" ___________________________________________\n";
 	static const char octopus[] =
 		"                         %k___\n"
 		"                      .-'   `'.\n"
@@ -1433,49 +1435,49 @@ ment_t ment_cinfo[] = {
 	MDEF_BACK(),
 	MDEF_CHGLINE(),
 	MDEF_CAPTION("---- SoC Info ----", TXT_CLR_CYAN_L),
-	MDEF_HANDLER("Fuses", print_fuseinfo),
+	MDEF_HANDLER("Fusibles", print_fuseinfo),
 	MDEF_CHGLINE(),
-	MDEF_CAPTION("-- Storage Info --", TXT_CLR_CYAN_L),
+	MDEF_CAPTION("--Almacenamiento--", TXT_CLR_CYAN_L),
 	MDEF_HANDLER("eMMC",    print_mmc_info),
-	MDEF_HANDLER("SD Card", print_sdcard_info),
+	MDEF_HANDLER("Tarj. SD", print_sdcard_info),
 	MDEF_CHGLINE(),
 	MDEF_CAPTION("------ Misc ------", TXT_CLR_CYAN_L),
-	MDEF_HANDLER("Battery", print_battery_info),
+	MDEF_HANDLER("Bateria", print_battery_info),
 	MDEF_END()
 };
 
-menu_t menu_cinfo = { ment_cinfo, "Console Info", 0, 0 };
+menu_t menu_cinfo = { ment_cinfo, "Info de Consola", 0, 0 };
 
 ment_t ment_tools[] = {
 	MDEF_BACK(),
 	MDEF_CHGLINE(),
-	MDEF_CAPTION("-------- Other -------", TXT_CLR_WARNING),
+	MDEF_CAPTION("-------- Otro -------", TXT_CLR_WARNING),
 	MDEF_HANDLER("AutoRCM", menu_autorcm),
 	MDEF_END()
 };
 
-menu_t menu_tools = { ment_tools, "Tools", 0, 0 };
+menu_t menu_tools = { ment_tools, "Herramientas", 0, 0 };
 
 power_state_t STATE_POWER_OFF           = POWER_OFF_RESET;
 power_state_t STATE_REBOOT_RCM          = REBOOT_RCM;
 power_state_t STATE_REBOOT_BYPASS_FUSES = REBOOT_BYPASS_FUSES;
 
 ment_t ment_top[] = {
-	MDEF_HANDLER("Launch", _launch_config),
+	MDEF_HANDLER("Iniciar", _launch_config),
 	MDEF_CAPTION("---------------", TXT_CLR_GREY_DM),
-	MDEF_MENU("Tools",        &menu_tools),
-	MDEF_MENU("Console info", &menu_cinfo),
+	MDEF_MENU("Herramientas",        &menu_tools),
+	MDEF_MENU("Info de Consola", &menu_cinfo),
 	MDEF_CAPTION("---------------", TXT_CLR_GREY_DM),
-	MDEF_HANDLER("Reload", _ipl_reload),
-	MDEF_HANDLER_EX("Reboot (OFW)", &STATE_REBOOT_BYPASS_FUSES, power_set_state_ex),
-	MDEF_HANDLER_EX("Reboot (RCM)", &STATE_REBOOT_RCM,          power_set_state_ex),
-	MDEF_HANDLER_EX("Power off",    &STATE_POWER_OFF,           power_set_state_ex),
+	MDEF_HANDLER("Recargar", _ipl_reload),
+	MDEF_HANDLER_EX("Reiniciar (OFW)", &STATE_REBOOT_BYPASS_FUSES, power_set_state_ex),
+	MDEF_HANDLER_EX("Reiniciar (RCM)", &STATE_REBOOT_RCM,          power_set_state_ex),
+	MDEF_HANDLER_EX("Apagar",          &STATE_POWER_OFF,       	   power_set_state_ex),
 	MDEF_CAPTION("---------------", TXT_CLR_GREY_DM),
-	MDEF_HANDLER("About", _about),
+	MDEF_HANDLER("Acerca de", _about),
 	MDEF_END()
 };
 
-menu_t menu_top = { ment_top, "hekate v6.0.5", 0, 0 };
+menu_t menu_top = { ment_top, "Hekate ESP v6.0.5\nTraducido por Lopez Tutoriales", 0, 0 };
 
 extern void pivot_stack(u32 stack_top);
 
@@ -1491,7 +1493,7 @@ void ipl_main()
 	heap_init((void *)IPL_HEAP_START);
 
 #ifdef DEBUG_UART_PORT
-	uart_send(DEBUG_UART_PORT, (u8 *)"hekate: Hello!\r\n", 16);
+	uart_send(DEBUG_UART_PORT, (u8 *)"Hekate: Hola!\r\n", 16);
 	uart_wait_xfer(DEBUG_UART_PORT, UART_TX_IDLE);
 #endif
 

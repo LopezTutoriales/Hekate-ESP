@@ -433,12 +433,12 @@ LZ4_FORCE_INLINE void LZ4_prepareTable(
           || tableType == byPtr
           || inputSize >= 4 KB)
         {
-            DEBUGLOG(4, "LZ4_prepareTable: Resetting table in %p", cctx);
+            DEBUGLOG(4, "LZ4_prepareTable: Reseteando tabla en %p", cctx);
             MEM_INIT(cctx->hashTable, 0, LZ4_HASHTABLESIZE);
             cctx->currentOffset = 0;
             cctx->tableType = clearedTable;
         } else {
-            DEBUGLOG(4, "LZ4_prepareTable: Re-use hash table (no reset)");
+            DEBUGLOG(4, "LZ4_prepareTable: Re-usar hash de tabla (no reset)");
         }
     }
 
@@ -447,7 +447,7 @@ LZ4_FORCE_INLINE void LZ4_prepareTable(
      * currentOffset == 0 is faster still, so we preserve that case.
      */
     if (cctx->currentOffset != 0 && tableType == byU32) {
-        DEBUGLOG(5, "LZ4_prepareTable: adding 64KB to currentOffset");
+        DEBUGLOG(5, "LZ4_prepareTable: Sumando 64KB al Offset actual");
         cctx->currentOffset += 64 KB;
     }
 
@@ -583,7 +583,7 @@ LZ4_FORCE_INLINE int LZ4_compress_generic(
                     }
                 } else if (dictDirective==usingExtDict) {
                     if (matchIndex < startIndex) {
-                        DEBUGLOG(7, "extDict candidate: matchIndex=%5u  <  startIndex=%5u", matchIndex, startIndex);
+                        DEBUGLOG(7, "extDict candidato: matchIndex=%5u  <  startIndex=%5u", matchIndex, startIndex);
                         match = dictBase + matchIndex;
                         lowLimit = dictionary;
                     } else {
@@ -660,11 +660,11 @@ _next_match:
                     matchCode += more;
                     ip += more;
                 }
-                DEBUGLOG(6, "             with matchLength=%u starting in extDict", matchCode+MINMATCH);
+                DEBUGLOG(6, "             con matchLength=%u empezando en extDict", matchCode+MINMATCH);
             } else {
                 matchCode = LZ4_count(ip+MINMATCH, match+MINMATCH, matchlimit);
                 ip += MINMATCH + matchCode;
-                DEBUGLOG(6, "             with matchLength=%u", matchCode+MINMATCH);
+                DEBUGLOG(6, "             con matchLength=%u", matchCode+MINMATCH);
             }
 
             if ( outputLimited &&    /* Check output buffer overflow */
@@ -1106,7 +1106,7 @@ int LZ4_loadDict (LZ4_stream_t* LZ4_dict, const char* dictionary, int dictSize)
     const BYTE* const dictEnd = p + dictSize;
     const BYTE* base;
 
-    DEBUGLOG(4, "LZ4_loadDict (%i bytes from %p into %p)", dictSize, dictionary, LZ4_dict);
+    DEBUGLOG(4, "LZ4_loadDict (%i bytes desde %p a %p)", dictSize, dictionary, LZ4_dict);
 
     LZ4_prepareTable(dict, 0, tableType);
 

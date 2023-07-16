@@ -11,7 +11,7 @@ void _modInit(void *moduleConfig, bdkParams_t bp)
 	memcpy(&gfx_con, bp->gfxCon, sizeof(gfx_con_t));
 	memcpy(&gfx_ctxt, bp->gfxCtx, sizeof(gfx_ctxt_t));
 
-	gfx_puts("Hello World!");
+	gfx_puts("Hola Mundo!");
 
 	memcpy(bp->gfxCon, &gfx_con, sizeof(gfx_con_t));
 	memcpy(bp->gfxCtx, &gfx_ctxt, sizeof(gfx_ctxt_t));

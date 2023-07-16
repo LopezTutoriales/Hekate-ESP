@@ -88,6 +88,6 @@ int main(int argc, char *argv[])
 	return 0;
 
 error:
-	fprintf(stderr, "Failed to compress: %s\n", argv[1]);
+	fprintf(stderr, "Error al comprimir: %s\n", argv[1]);
 	exit(1);
 }

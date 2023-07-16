@@ -69,7 +69,7 @@ void lv_draw_img(const lv_area_t * coords, const lv_area_t * mask,
                  const void * src, const lv_style_t * style, lv_opa_t opa_scale)
 {
     if(src == NULL) {
-        LV_LOG_WARN("Image draw: src is NULL");
+        LV_LOG_WARN("Image draw: src es NULO");
         lv_draw_rect(coords, mask, &lv_style_plain, LV_OPA_COVER);
         lv_draw_label(coords, mask, &lv_style_plain, LV_OPA_COVER, "No\ndata", LV_TXT_FLAG_NONE, NULL);
         return;
@@ -79,7 +79,7 @@ void lv_draw_img(const lv_area_t * coords, const lv_area_t * mask,
     res = lv_img_draw_core(coords, mask, src, style, opa_scale);
 
     if(res ==  LV_RES_INV) {
-        LV_LOG_WARN("Image draw error");
+        LV_LOG_WARN("Image draw: error");
         lv_draw_rect(coords, mask, &lv_style_plain, LV_OPA_COVER);
         lv_draw_label(coords, mask, &lv_style_plain, LV_OPA_COVER, "No\ndata", LV_TXT_FLAG_NONE, NULL);
         return;
@@ -253,7 +253,7 @@ lv_img_src_t lv_img_src_get_type(const void * src)
     }
 
     if (LV_IMG_SRC_UNKNOWN == img_src_type) {
-        LV_LOG_WARN("lv_img_src_get_type: unknown image type");
+        LV_LOG_WARN("lv_img_src_get_type: tipo de imagen desconocido");
     }
 
     return img_src_type;
